@@ -1,0 +1,15 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div>
+  <app-menu-bar></app-menu-bar>
+  <h1 style="text-align:center">
+    Welcome to {{ title }} ! <br>Logged in: {{AuthenticationService.isLoggedIn()}}
+  </h1>
+  <div *ngFor="let profile of profiles">
+    <pre>
+      {{jsonToString(profile)}}
+    </pre>
+  </div>
+</div>
+
+<sb-container></sb-container>
+<router-outlet></router-outlet>
