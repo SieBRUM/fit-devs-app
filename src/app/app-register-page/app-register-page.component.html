@@ -9,53 +9,70 @@
             </button>
             {{error}}
           </alert>
-          <h5 class="card-title text-center">Registreer</h5>
-          <div class="form-label-group">
-            <input type="text" id="inputUsername" class="form-control" placeholder="Gebruikersnaam" (keydown.enter)="login()"
-              [(ngModel)]="username" required autofocus>
+          <h5 class="card-title text-center">Registreer (stap {{step}} / 2)</h5>
+          <!-- START step 1 of registration -->
+          <div *ngIf="checkIfStep(1)">
+            <div class="form-label-group">
+              <input type="text" id="inputUsername" class="form-control" placeholder="Gebruikersnaam" (keydown.enter)="login()"
+                [(ngModel)]="username" required autofocus>
+            </div>
+            <div class="form-label-group">
+              <input type="password" id="inputPassword" class="form-control" placeholder="Wachtwoord" [(ngModel)]="password"
+                required>
+            </div>
+            <div class="form-label-group">
+              <input type="password" id="inputPasswordRepeat" class="form-control" placeholder="Wachtwoord (herhalen)"
+                [(ngModel)]="passwordRepeat" required>
+            </div>
+            <div class="form-label-group">
+              <input type="text" id="inputName" class="form-control" placeholder="Naam" required [(ngModel)]="name">
+            </div>
+            <div class="form-label-group">
+              <input type="email" id="inputEmail" class="form-control" placeholder="Email adres" required [(ngModel)]="email">
+            </div>
+            <div class="form-label-group">
+              <input type="date" id="inputDate" class="form-control" placeholder="Geboortedatum" required [(ngModel)]="date">
+            </div>
+            <div class="form-label-group">
+              <select id="selectQuestion" class="form-control" placeholder="Beveiligingsvraag" [(ngModel)]="selectedQuestion">
+                <option *ngFor="let question of questions" [ngValue]="question">
+                  {{question}}
+                </option>
+              </select>
+            </div>
+            <div class="form-label-group">
+              <input type="input" id="inputQuestion" class="form-control" placeholder="Beveiligingsantwoord"
+                [(ngModel)]="recoveryQuestionAnswer" required>
+            </div>
+            <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegisterUser()">
+              Volgende
+              <fa name="arrow-right"></fa>
+            </button>
+            <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()">
+              Annuleren
+              <fa name="times"></fa>
+            </button>
           </div>
-          <div class="form-label-group">
-            <input type="password" id="inputPassword" class="form-control" placeholder="Wachtwoord" [(ngModel)]="password"
-              required>
+          <!-- END step 1 of registration -->
+          <div *ngIf="checkIfStep(2)">
+            <div class="form-label-group">
+              <input type="number" id="inputLength" class="form-control" placeholder="Lengte" required [(ngModel)]="length">
+            </div>
+            <div class="form-label-group">
+              <input type="number" id="inputWeigth" class="form-control" placeholder="Gewicht (in kg)" required
+                [(ngModel)]="weigth">
+            </div>
+            <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegisterProfile()">
+              Registreer
+              <fa name="check"></fa>
+            </button>
+            <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()">
+              Annuleren
+              <fa name="times"></fa>
+            </button>
           </div>
-          <div class="form-label-group">
-            <input type="password" id="inputPasswordRepeat" class="form-control" placeholder="Wachtwoord (herhalen)"
-              [(ngModel)]="passwordRepeat" required>
-          </div>
-          <div class="form-label-group">
-            <input type="text" id="inputName" class="form-control" placeholder="Naam" required [(ngModel)]="name">
-          </div>
-          <div class="form-label-group">
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email adres" required [(ngModel)]="email">
-          </div>
-          <div class="form-label-group">
-            <input type="date" id="inputDate" class="form-control" placeholder="Geboortedatum" required [(ngModel)]="date">
-          </div>
-          <div class="form-label-group">
-            <input type="number" id="inputLength" class="form-control" placeholder="Lengte" required [(ngModel)]="length">
-          </div>
-          <div class="form-label-group">
-            <input type="number" id="inputWeigth" class="form-control" placeholder="Gewicht (in kg)" required
-              [(ngModel)]="weigth">
-          </div>
-          <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegister()">
-            Registreren
-            <fa name="check"></fa>
-          </button>
-          <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()">
-            Annuleren
-            <fa name="times"></fa>
-          </button>
         </div>
       </div>
     </div>
   </div>
-  Gebruikersnaam: <b>{{username}}</b> <br>
-  Wachtwoord: <b>{{password}}</b> <br>
-  Wachtwoord herhaald:<b> {{passwordRepeat}}</b><br>
-  Naam: <b>{{name}}</b><br>
-  Email:<b> {{email}}</b><br>
-  Datum: <b>{{date}} </b><br>
-  Lengte: <b>{{length}}</b><br>
-  Gewicht: <b>{{weigth}}</b>
 </div>

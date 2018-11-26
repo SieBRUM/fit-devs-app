@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
         // Can access route if not logged in, but page HAS TO BE login / register
         // TODO: add Forgot password page and home page
         if (!this.authService.isLoggedIn()) {
-            if (url == "/login" || url == "/register") {
+            if (url == "/login" || url == "/register" || url == "/recover") {
                 return true;
             }
         } else {

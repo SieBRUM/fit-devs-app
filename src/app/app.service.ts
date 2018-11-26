@@ -36,12 +36,20 @@ export class AppService {
         return this.http.get<Array<IProfile>>(`${this.API_URL}users`, { observe: 'response' });
     }
 
+    getRecoveryQuestions(): Observable<HttpResponse<Array<string>>> {
+        return this.http.get<Array<string>>(`${this.API_URL}recoveryquestions`, { observe: 'response' });
+    }
+
     loginUser(user: IUser): Observable<HttpResponse<IProfile>> {
         return this.http.post<IProfile>(`${this.API_URL}login`, user, { observe: 'response' });
     }
 
-    registerUser(profile: IProfile): Observable<HttpResponse<IProfile>> {
-        return this.http.post<IProfile>(`${this.API_URL}login`, profile, { observe: 'response' });
+    registerUser(profile: IUser): Observable<HttpResponse<IUser>> {
+        return this.http.post<IUser>(`${this.API_URL}login`, profile, { observe: 'response' });
+    }
+
+    recoverUser(profile: IUser): Observable<HttpResponse<any>> {
+        return this.http.post<IProfile>(`${this.API_URL}recover`, profile, { observe: 'response' });
     }
 
     getPosition(): Coordinates {

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { IProfile } from 'src/mapping/IProfile';
 import { Router } from '@angular/router';
+import { IUser } from 'src/mapping/IUser';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private currentUser: IProfile;
+    private currentUser: IUser;
 
     constructor(
         private router: Router
@@ -18,7 +19,7 @@ export class AuthenticationService {
         }
     }
 
-    getCurrentUser(): IProfile {
+    getCurrentUser(): IUser {
         return this.currentUser;
     }
 
@@ -26,7 +27,7 @@ export class AuthenticationService {
         return "1337-420-lmao-kek"
     }
 
-    setCurrentUser(newUser: IProfile): void {
+    setCurrentUser(newUser: IUser): void {
         this.currentUser = newUser;
         localStorage.setItem('user', JSON.stringify(newUser));
     }

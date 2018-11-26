@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AppService } from './../app.service';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
+import { IUser } from 'src/mapping/IUser';
 
 @Component({
     selector: 'app-login',
@@ -30,15 +31,20 @@ export class AppLoginPageComponent {
         this.loggingIn = true;
         this.error = "";
 
-        var user = {
+        var user: IUser = {
             Username: this.username,
             Password: this.password,
+            Name: null,
+            DateOfBirth: null,
+            Email: null,
+            RecoveryAnswer: null,
+            RecoveryId: null,
             Id: null
         };
 
         this.httpService.loginUser(user).subscribe(
             (res) => {
-                this.authenticationService.setCurrentUser(res.body);
+                this.authenticationService.setCurrentUser(res.body.User);
                 this.router.navigateByUrl('/');
             },
             (err) => {

@@ -19,13 +19,17 @@ import { AppLoginPageComponent } from './app-login-page/app-login-page.component
 import { AppRegisterPageComponent } from './app-register-page/app-register-page.component';
 import { FormsModule } from '@angular/forms';
 import { AppInterceptor } from './app.interceptor';
+import { AppForgotPasswordPageComponent } from './app-forgot-password-page/app-forgot-password-page.component';
+import { AppHomePageComponent } from './app-home-page/app-home-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppMenuBarComponent,
     AppLoginPageComponent,
-    AppRegisterPageComponent
+    AppRegisterPageComponent,
+    AppForgotPasswordPageComponent,
+    AppHomePageComponent
   ],
   imports: [
     BrowserModule,
