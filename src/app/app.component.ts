@@ -29,8 +29,4 @@ export class AppComponent {
           console.log(err);
         });
   }
-
-  jsonToString(obj: Object) {
-    return JSON.stringify(obj, null, "\t");
-  }
 }

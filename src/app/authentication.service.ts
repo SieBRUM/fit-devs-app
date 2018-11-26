@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { IProfile } from 'src/mapping/IProfile';
 import { Router } from '@angular/router';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthenticationService {
     private currentUser: IProfile;
 
@@ -18,6 +20,10 @@ export class AuthenticationService {
 
     getCurrentUser(): IProfile {
         return this.currentUser;
+    }
+
+    getAuthorizationToken(): string {
+        return "1337-420-lmao-kek"
     }
 
     setCurrentUser(newUser: IProfile): void {

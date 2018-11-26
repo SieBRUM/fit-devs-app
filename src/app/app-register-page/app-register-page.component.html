@@ -3,6 +3,12 @@
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card card-signin my-5">
         <div class="card-body">
+          <alert [hidden]="!hasError(error)" type="danger">
+            <button type="button" class="close" aria-label="Close" (click)="onClearError()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{error}}
+          </alert>
           <h5 class="card-title text-center">Registreer</h5>
           <div class="form-label-group">
             <input type="text" id="inputUsername" class="form-control" placeholder="Gebruikersnaam" (keydown.enter)="login()"

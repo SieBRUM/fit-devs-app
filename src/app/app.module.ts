@@ -11,13 +11,14 @@ import { StoreModule } from '@ngrx/store';
 // Personal
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppService } from './app.service';
 import { AppMenuBarComponent } from './app-menu-bar/app-menu-bar.component';
 import { AuthenticationService } from './authentication.service';
 import { AppLoginPageComponent } from './app-login-page/app-login-page.component';
 import { AppRegisterPageComponent } from './app-register-page/app-register-page.component';
 import { FormsModule } from '@angular/forms';
+import { AppInterceptor } from './app.interceptor';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,12 @@ import { FormsModule } from '@angular/forms';
   providers: [
     AppService,
     AuthenticationService,
-    SnackBarService
+    SnackBarService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

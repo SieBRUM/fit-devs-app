@@ -2,7 +2,7 @@ import { IUser } from './IUser'
 import { ILocation } from './ILocation'
 
 export interface IProfile {
-    DateOfBirth: string;
+    DateOfBirth: Date;
     Email: string;
     Id: number;
     IsLazy: boolean;
