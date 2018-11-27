@@ -1,4 +1,4 @@
 export class ICookieUser {
-    Id: number;
+    Name: string;
     Cookie: string;
 }

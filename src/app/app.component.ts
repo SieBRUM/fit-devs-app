@@ -21,8 +21,6 @@ export class AppComponent {
     this.HttpService.getUsers()
       .subscribe(
         (resp) => {
-          console.log(resp);
-          console.log(resp.body[0].Location.Longitude);
           this.profiles = resp.body;
         },
         (err) => {

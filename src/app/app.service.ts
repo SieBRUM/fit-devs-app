@@ -46,8 +46,8 @@ export class AppService {
         return this.http.post<ICookieUser>(`${this.API_URL}login`, user, { observe: 'response' });
     }
 
-    checkAvailability(data: any): Observable<HttpResponse<boolean>> {
-        return this.http.post<boolean>(`${this.API_URL}checkavailability`, data, { observe: 'response' });
+    checkAvailability(data: any): Observable<HttpResponse<any>> {
+        return this.http.post<any>(`${this.API_URL}checkavailability`, data, { observe: 'response' });
     }
 
     registerProfile(profile: IProfile): Observable<HttpResponse<ICookieUser>> {

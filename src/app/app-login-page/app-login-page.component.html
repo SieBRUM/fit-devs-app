@@ -10,14 +10,24 @@
             {{error}}
           </alert>
           <h5 class="card-title text-center">Log in</h5>
-          <div class="form-label-group">
-            <input type="text" id="inputUsername" class="form-control" placeholder="Gebruikersnaam" [(ngModel)]="username"
-              (keydown.enter)="login()" required autofocus [disabled]="loggingIn">
+          <div class="form-label-group input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="btnGroupAddon">
+                <fa name="user"></fa>
+              </div>
+            </div>
+            <input type="text" id="inputUsername" class="form-control rounded-input-with-label" placeholder="Gebruikersnaam"
+              [(ngModel)]="username" (keydown.enter)="login()" required autofocus [disabled]="loggingIn">
           </div>
 
-          <div class="form-label-group">
-            <input type="password" id="inputPassword" class="form-control" placeholder="Wachtwoord" (keydown.enter)="login()"
-              [(ngModel)]="password" required [disabled]="loggingIn">
+          <div class="form-label-group input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="btnGroupAddon">
+                <fa name="lock"></fa>
+              </div>
+            </div>
+            <input type="password" id="inputPassword" class="form-control rounded-input-with-label" placeholder="Wachtwoord"
+              (keydown.enter)="login()" [(ngModel)]="password" required [disabled]="loggingIn">
           </div>
           <div style="text-align: center;">
             <div class="btn-group" role="group">

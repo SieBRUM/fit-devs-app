@@ -12,40 +12,81 @@
           <h5 class="card-title text-center">Registreer (stap {{step}} / 2)</h5>
           <!-- START step 1 of registration -->
           <div *ngIf="checkIfStep(1)">
-            <div class="form-label-group">
-              <input type="text" id="inputUsername" class="form-control" placeholder="Gebruikersnaam" [(ngModel)]="username"
-                required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="user"></fa>
+                </div>
+              </div>
+              <input type="text" id="inputUsername" class="form-control rounded-input-with-label" placeholder="Gebruikersnaam"
+                [(ngModel)]="username" required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
-            <div class="form-label-group">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Wachtwoord" [(ngModel)]="password"
-                required [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="lock"></fa>
+                </div>
+              </div>
+              <input type="password" id="inputPassword" class="form-control rounded-input-with-label" placeholder="Wachtwoord"
+                [(ngModel)]="password" required [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
-            <div class="form-label-group">
-              <input type="password" id="inputPasswordRepeat" class="form-control" placeholder="Wachtwoord (herhalen)"
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="lock"></fa>
+                </div>
+              </div>
+              <input type="password" id="inputPasswordRepeat" class="form-control rounded-input-with-label" placeholder="Wachtwoord (herhalen)"
                 [(ngModel)]="passwordRepeat" required [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
-            <div class="form-label-group">
-              <input type="text" id="inputName" class="form-control" placeholder="Naam" required [(ngModel)]="name"
-                [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="tag"></fa>
+                </div>
+              </div>
+              <input type="text" id="inputName" class="form-control rounded-input-with-label" placeholder="Naam"
+                required [(ngModel)]="name" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
-            <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email adres" required [(ngModel)]="email"
-                [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="envelope"></fa>
+                </div>
+              </div>
+              <input type="email" id="inputEmail" class="form-control rounded-input-with-label" placeholder="Email adres"
+                required [(ngModel)]="email" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
-            <div class="form-label-group">
-              <input type="date" id="inputDate" class="form-control" placeholder="Geboortedatum" required [(ngModel)]="date"
-                [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="calendar"></fa>
+                </div>
+              </div>
+              <input type="date" id="inputDate" class="form-control rounded-input-with-label" placeholder="Geboortedatum"
+                required [(ngModel)]="date" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
-            <div class="form-label-group">
-              <select id="selectQuestion" class="form-control" placeholder="Beveiligingsvraag" [(ngModel)]="selectedQuestion"
-                [disabled]="isLoading">
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="question"></fa>
+                </div>
+              </div>
+              <select id="selectQuestion" class="form-control rounded-input-with-label" placeholder="Beveiligingsvraag"
+                [(ngModel)]="selectedQuestion" [disabled]="isLoading">
+                <option [ngValue]="null" disabled hidden>Kies een beveiligingsvraag...</option>
                 <option *ngFor="let question of questions" [ngValue]="question.Id">
                   {{question.RecoveryQuestion}}
                 </option>
               </select>
             </div>
-            <div class="form-label-group">
-              <input type="input" id="inputQuestion" class="form-control" placeholder="Beveiligingsantwoord"
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="check"></fa>
+                </div>
+              </div>
+              <input type="input" id="inputQuestion" class="form-control rounded-input-with-label" placeholder="Beveiligingsantwoord"
                 [(ngModel)]="recoveryQuestionAnswer" required [disabled]="isLoading" (keydown.enter)="onRegisterUser()">
             </div>
             <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegisterUser()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
@@ -67,13 +108,23 @@
 
           <!-- START step 2 of registration -->
           <div *ngIf="checkIfStep(2)">
-            <div class="form-label-group">
-              <input type="number" id="inputLength" class="form-control" placeholder="Lengte" required [(ngModel)]="length"
-                (keydown.enter)="onRegisterProfile()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="user-md"></fa>
+                </div>
+              </div>
+              <input type="number" id="inputLength" class="form-control rounded-input-with-label" placeholder="Lengte"
+                required [(ngModel)]="length" (keydown.enter)="onRegisterProfile()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
-            <div class="form-label-group">
-              <input type="number" id="inputWeigth" class="form-control" placeholder="Gewicht (in kg)" required
-                [(ngModel)]="weigth" (keydown.enter)="onRegisterProfile()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
+            <div class="form-label-group input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">
+                  <fa name="user-md"></fa>
+                </div>
+              </div>
+              <input type="number" id="inputWeigth" class="form-control rounded-input-with-label" placeholder="Gewicht (in kg)"
+                required [(ngModel)]="weigth" (keydown.enter)="onRegisterProfile()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
             <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegisterProfile()">
               <div *ngIf="!isLoading || (isLoading && isLoadingQuestions(isLoading, questions))">

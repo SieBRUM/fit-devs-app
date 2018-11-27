@@ -14,8 +14,6 @@ export class AuthGuard implements CanActivate {
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean {
-        console.log(next);
-        console.log(state);
         return this.checkLogin(state.url);
     }
 
@@ -29,7 +27,7 @@ export class AuthGuard implements CanActivate {
             }
         } else {
             // Can access route if logged in AND not routing to login page / register page
-            if (url != "/login" && url != "/register") {
+            if (url != "/login" && url != "/register" && url != "/recover") {
                 return true;
             }
         }

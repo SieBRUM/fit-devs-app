@@ -23,4 +23,20 @@ export class AppMenuBarComponent {
     logout() {
         this.AuthenticationService.logout();
     }
+
+    getUsername() {
+        return this.AuthenticationService.getCurrentUserCookie().Name;
+    }
+
+    navigate(route: string) {
+        this.router.navigateByUrl(route);
+    }
+
+    getClass(route: string) {
+        if (this.router.url == route) {
+            return "btn my-2 my-sm-0 menu-bar-item selected"
+        } else {
+            return "btn my-2 my-sm-0 menu-bar-item"
+        }
+    }
 }
