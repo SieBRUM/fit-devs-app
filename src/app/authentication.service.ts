@@ -42,7 +42,8 @@ export class AuthenticationService {
         }
     }
 
-    logout() {
+    logout(url: string = "") {
+        this.redirectUrl = url;
         localStorage.removeItem('user-cookie');
         this.userCookie = null;
         this.router.navigateByUrl('/login');

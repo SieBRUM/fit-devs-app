@@ -42,6 +42,10 @@ export class AppService {
         return this.http.get<Array<IRecoveryQuestion>>(`${this.API_URL}recoveryquestions`, { observe: 'response' });
     }
 
+    getProfile(): Observable<HttpResponse<IProfile>> {
+        return this.http.get<IProfile>(`${this.API_URL}profile`, { observe: 'response' });
+    }
+
     loginUser(user: IUser): Observable<HttpResponse<ICookieUser>> {
         return this.http.post<ICookieUser>(`${this.API_URL}login`, user, { observe: 'response' });
     }

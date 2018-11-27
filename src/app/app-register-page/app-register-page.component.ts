@@ -47,7 +47,7 @@ export class AppRegisterPageComponent {
         }, 1000);
     }
 
-    onRegisterUser() {
+    onRegisterUser(): void {
         this.error = "";
         if (!this.username || !this.password || !this.passwordRepeat
             || !this.name || !this.email || !this.date
@@ -80,7 +80,7 @@ export class AppRegisterPageComponent {
         }, 1000);
     }
 
-    onRegisterProfile() {
+    onRegisterProfile(): void {
         if (!this.length || !this.weigth) {
             this.error = "Alle velden zijn verplicht!";
             return;
@@ -130,7 +130,7 @@ export class AppRegisterPageComponent {
         this.router.navigateByUrl('/login');
     }
 
-    onClearError() {
+    onClearError(): void {
         this.error = "";
     }
 
@@ -138,7 +138,7 @@ export class AppRegisterPageComponent {
         return error ? true : false;
     }
 
-    checkIfStep(step: number) {
+    checkIfStep(step: number): boolean {
         return step == this.step ? true : false;
     }
 

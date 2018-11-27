@@ -16,23 +16,23 @@ export class AppMenuBarComponent {
         private router: Router
     ) { }
 
-    login() {
+    login(): void {
         this.router.navigateByUrl('/login');
     }
 
-    logout() {
+    logout(): void {
         this.AuthenticationService.logout();
     }
 
-    getUsername() {
+    getUsername(): string {
         return this.AuthenticationService.getCurrentUserCookie().Name;
     }
 
-    navigate(route: string) {
+    navigate(route: string): void {
         this.router.navigateByUrl(route);
     }
 
-    getClass(route: string) {
+    getClass(route: string): string {
         if (this.router.url == route) {
             return "btn my-2 my-sm-0 menu-bar-item selected"
         } else {

@@ -56,23 +56,23 @@ export class AppLoginPageComponent {
         }, 1000);
     }
 
-    onUsernameChange(username: string) {
+    onUsernameChange(username: string): void {
         this.username = username;
     }
 
-    onPasswordChange(password: string) {
+    onPasswordChange(password: string): void {
         this.password = password;
     }
 
-    onClearError() {
+    onClearError(): void {
         this.error = "";
     }
 
-    hasError(error: string) {
+    hasError(error: string): boolean {
         return error ? true : false;
     }
 
-    onRegister() {
+    onRegister(): void {
         this.router.navigateByUrl('/register');
     }
 }
