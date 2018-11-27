@@ -42,13 +42,13 @@ export class AppForgotPasswordPageComponent {
         }, 1000);
     }
 
-    onCancel() {
+    onCancel(): void {
         this.isSuccess = false;
         this.error = "";
         this.router.navigateByUrl('/login');
     }
 
-    onRequestRecover() {
+    onRequestRecover(): void {
         this.error = "";
         if (!this.recoveryQuestionAnswer || !this.email || !this.password || !this.passwordRepeat || !this.selectedQuestion) {
             this.error = "Alle velden zijn verplicht!";
