@@ -13,64 +13,83 @@
           <!-- START step 1 of registration -->
           <div *ngIf="checkIfStep(1)">
             <div class="form-label-group">
-              <input type="text" id="inputUsername" class="form-control" placeholder="Gebruikersnaam" (keydown.enter)="login()"
-                [(ngModel)]="username" required autofocus>
+              <input type="text" id="inputUsername" class="form-control" placeholder="Gebruikersnaam" [(ngModel)]="username"
+                required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
             <div class="form-label-group">
               <input type="password" id="inputPassword" class="form-control" placeholder="Wachtwoord" [(ngModel)]="password"
-                required>
+                required [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
             <div class="form-label-group">
               <input type="password" id="inputPasswordRepeat" class="form-control" placeholder="Wachtwoord (herhalen)"
-                [(ngModel)]="passwordRepeat" required>
+                [(ngModel)]="passwordRepeat" required [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
             <div class="form-label-group">
-              <input type="text" id="inputName" class="form-control" placeholder="Naam" required [(ngModel)]="name">
+              <input type="text" id="inputName" class="form-control" placeholder="Naam" required [(ngModel)]="name"
+                [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
             <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email adres" required [(ngModel)]="email">
+              <input type="email" id="inputEmail" class="form-control" placeholder="Email adres" required [(ngModel)]="email"
+                [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
             <div class="form-label-group">
-              <input type="date" id="inputDate" class="form-control" placeholder="Geboortedatum" required [(ngModel)]="date">
+              <input type="date" id="inputDate" class="form-control" placeholder="Geboortedatum" required [(ngModel)]="date"
+                [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
             <div class="form-label-group">
-              <select id="selectQuestion" class="form-control" placeholder="Beveiligingsvraag" [(ngModel)]="selectedQuestion">
-                <option *ngFor="let question of questions" [ngValue]="question">
-                  {{question}}
+              <select id="selectQuestion" class="form-control" placeholder="Beveiligingsvraag" [(ngModel)]="selectedQuestion"
+                [disabled]="isLoading">
+                <option *ngFor="let question of questions" [ngValue]="question.Id">
+                  {{question.RecoveryQuestion}}
                 </option>
               </select>
             </div>
             <div class="form-label-group">
               <input type="input" id="inputQuestion" class="form-control" placeholder="Beveiligingsantwoord"
-                [(ngModel)]="recoveryQuestionAnswer" required>
+                [(ngModel)]="recoveryQuestionAnswer" required [disabled]="isLoading" (keydown.enter)="onRegisterUser()">
             </div>
-            <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegisterUser()">
-              Volgende
-              <fa name="arrow-right"></fa>
+            <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegisterUser()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
+              <div *ngIf="!isLoading || (isLoading && isLoadingQuestions(isLoading, questions))">
+                Volgende
+                <fa name="arrow-right"></fa>
+              </div>
+              <div *ngIf="!isLoadingQuestions(isLoading, questions) && isLoading">
+                <fa name="cog" size="2x" animation="spin"></fa>
+              </div>
             </button>
-            <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()">
+            <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()" [hidden]="isLoading"
+              [hidden]="!isLoadingQuestions(isLoading, questions) && isLoading">
               Annuleren
               <fa name="times"></fa>
             </button>
           </div>
           <!-- END step 1 of registration -->
+
+          <!-- START step 2 of registration -->
           <div *ngIf="checkIfStep(2)">
             <div class="form-label-group">
-              <input type="number" id="inputLength" class="form-control" placeholder="Lengte" required [(ngModel)]="length">
+              <input type="number" id="inputLength" class="form-control" placeholder="Lengte" required [(ngModel)]="length"
+                (keydown.enter)="onRegisterProfile()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
             <div class="form-label-group">
               <input type="number" id="inputWeigth" class="form-control" placeholder="Gewicht (in kg)" required
-                [(ngModel)]="weigth">
+                [(ngModel)]="weigth" (keydown.enter)="onRegisterProfile()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
             </div>
             <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegisterProfile()">
-              Registreer
-              <fa name="check"></fa>
+              <div *ngIf="!isLoading || (isLoading && isLoadingQuestions(isLoading, questions))">
+                Registreer
+                <fa name="check"></fa>
+              </div>
+              <div *ngIf="!isLoadingQuestions(isLoading, questions) && isLoading">
+                <fa name="cog" size="2x" animation="spin"></fa>
+              </div>
             </button>
-            <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()">
+            <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()" [hidden]="!isLoadingQuestions(isLoading, questions) && isLoading">
               Annuleren
               <fa name="times"></fa>
             </button>
           </div>
+          <!-- START step 2 of registration -->
         </div>
       </div>
     </div>

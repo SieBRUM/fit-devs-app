@@ -1,44 +1,54 @@
 import { Injectable } from '@angular/core';
-import { IProfile } from 'src/mapping/IProfile';
 import { Router } from '@angular/router';
-import { IUser } from 'src/mapping/IUser';
+import { ICookieUser } from 'src/mapping/ICookieUser';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private currentUser: IUser;
+    private userCookie: ICookieUser;
+    public redirectUrl: string = "";
 
     constructor(
         private router: Router
     ) {
-        if (localStorage.getItem('user')) {
-            this.currentUser = JSON.parse(localStorage.getItem('user'));
+        if (localStorage.getItem('user-cookie')) {
+            this.userCookie = JSON.parse(localStorage.getItem('user-cookie'));
         } else {
-            this.currentUser = null;
+            this.userCookie = null;
         }
     }
 
-    getCurrentUser(): IUser {
-        return this.currentUser;
+    getCurrentUserCookie(): ICookieUser {
+        return this.userCookie;
     }
 
     getAuthorizationToken(): string {
-        return "1337-420-lmao-kek"
+        if (!this.userCookie) {
+            return null;
+        }
+
+        return this.userCookie.Cookie;
     }
 
-    setCurrentUser(newUser: IUser): void {
-        this.currentUser = newUser;
-        localStorage.setItem('user', JSON.stringify(newUser));
+    setCurrentUser(cookie: ICookieUser): void {
+        this.userCookie = cookie;
+        localStorage.setItem('user-cookie', JSON.stringify(cookie));
+
+        if (this.redirectUrl) {
+            this.router.navigateByUrl(this.redirectUrl);
+        } else {
+            this.router.navigateByUrl("/home");
+        }
     }
 
     logout() {
-        localStorage.removeItem('user');
-        this.currentUser = null;
+        localStorage.removeItem('user-cookie');
+        this.userCookie = null;
         this.router.navigateByUrl('/login');
     }
 
     isLoggedIn(): boolean {
-        return this.currentUser ? true : false;
+        return this.userCookie ? true : false;
     }
 }

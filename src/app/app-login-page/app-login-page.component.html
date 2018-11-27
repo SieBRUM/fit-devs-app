@@ -12,23 +12,28 @@
           <h5 class="card-title text-center">Log in</h5>
           <div class="form-label-group">
             <input type="text" id="inputUsername" class="form-control" placeholder="Gebruikersnaam" [(ngModel)]="username"
-              (keydown.enter)="login()" required autofocus>
+              (keydown.enter)="login()" required autofocus [disabled]="loggingIn">
           </div>
 
           <div class="form-label-group">
             <input type="password" id="inputPassword" class="form-control" placeholder="Wachtwoord" (keydown.enter)="login()"
-              [(ngModel)]="password" required>
+              [(ngModel)]="password" required [disabled]="loggingIn">
           </div>
           <div style="text-align: center;">
             <div class="btn-group" role="group">
-              <button class="btn btn-big btn-lg btn-primary text-uppercase" (click)="login()">
+              <button class="btn btn-big btn-lg btn-primary text-uppercase" (click)="login()" [hidden]="loggingIn">
                 Inloggen
               </button>
-              <button class="btn btn-big btn-lg btn-success text-uppercase" (click)="onRegister()">
+              <button class="btn btn-big btn-lg btn-success text-uppercase" (click)="onRegister()" [hidden]="loggingIn">
                 Registeren
               </button>
             </div>
-            <p class="text-muted">Wachtwoord vergeten? <a routerLink="/recover">Klik hier</a></p>
+            <button class="btn btn-big btn-lg btn-primary text-uppercase" (click)="login()" [disabled]="loggingIn"
+              [hidden]="!loggingIn" style="width: 100%;">
+              <fa name="cog" animation="spin" size="lg"></fa>
+              Aan het inloggen...
+            </button>
+            <p class="text-muted" [hidden]="loggingIn">Wachtwoord vergeten? <a routerLink="/recover">Klik hier</a></p>
           </div>
         </div>
       </div>

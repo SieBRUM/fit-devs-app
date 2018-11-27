@@ -39,20 +39,21 @@ export class AppLoginPageComponent {
             Email: null,
             RecoveryAnswer: null,
             RecoveryId: null,
-            Id: null
+            Id: null,
+            Cookie: null
         };
 
-        this.httpService.loginUser(user).subscribe(
-            (res) => {
-                this.authenticationService.setCurrentUser(res.body.User);
-                this.router.navigateByUrl('/');
-            },
-            (err) => {
-                this.error = err.error.Message;
-            },
-            () => {
-                this.loggingIn = false;
-            });
+        setTimeout(() => {
+            this.httpService.loginUser(user).subscribe(
+                (res) => {
+                    this.authenticationService.setCurrentUser(res.body);
+                    this.loggingIn = false;
+                },
+                (err) => {
+                    this.error = err.error.Message;
+                    this.loggingIn = false;
+                });
+        }, 1000);
     }
 
     onUsernameChange(username: string) {

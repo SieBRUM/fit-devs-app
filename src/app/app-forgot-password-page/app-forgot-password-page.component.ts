@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ReflectiveInjector } from '@angular/core';
 import { AppService } from '../app.service';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
 import { IProfile } from 'src/mapping/IProfile';
 import { IUser } from 'src/mapping/IUser';
+import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
 
 @Component({
     selector: 'app-forgot-password',
@@ -13,31 +14,32 @@ import { IUser } from 'src/mapping/IUser';
 export class AppForgotPasswordPageComponent {
     isSuccess: boolean = false;
     isLoading: boolean = false;
+
     error: string = "";
-    questions: Array<string> = [];
+    questions: Array<IRecoveryQuestion> = [];
     email: string = null;
     recoveryQuestionAnswer: string = null;
-    selectedQuestion: string = null;
+    selectedQuestion: number = null;
+    password: string = "";
+    passwordRepeat: string = "";
 
     constructor(
         private httpService: AppService,
         private router: Router
     ) {
+        this.isLoading = true;
 
-        this.httpService.getRecoveryQuestions().subscribe(
-            (resp) => {
-                this.questions = resp.body;
-            },
-            (err) => {
-                this.error = err.error.Message;
-                this.questions = [
-                    "Wat is je lievelings eten?",
-                    "Wat was je eerste huisdier?",
-                    "Wat is je moeders middelnaam?",
-                    "Wat was je eerste school?",
-                    "Wat is je geboorteplaats?",
-                ];
-            });
+        setTimeout(() => {
+            this.httpService.getRecoveryQuestions().subscribe(
+                (resp) => {
+                    this.questions = resp.body;
+                    this.isLoading = false;
+                },
+                (err) => {
+                    this.error = err.error.Message;
+                    this.isLoading = false;
+                });
+        }, 1000);
     }
 
     onCancel() {
@@ -47,28 +49,53 @@ export class AppForgotPasswordPageComponent {
     }
 
     onRequestRecover() {
-        let recoverUser: IUser = {
-            Id: 0,
-            Password: null,
-            Username: null,
-            Email: this.email,
-            RecoveryId: 0,
-            RecoveryAnswer: this.recoveryQuestionAnswer,
-            Name: null,
-            DateOfBirth: null
+        this.error = "";
+        if (!this.recoveryQuestionAnswer || !this.email || !this.password || !this.passwordRepeat || !this.selectedQuestion) {
+            this.error = "Alle velden zijn verplicht!";
+            return;
         }
 
-        this.httpService.recoverUser(recoverUser).subscribe(
-            (resp) => {
-                this.isSuccess = true;
-            },
-            (err) => {
-                this.isSuccess = true;
-                this.error = err.error.Message;
-            });
+        if (this.passwordRepeat != this.password) {
+            this.error = "Wachtwoorden komen niet overeen!";
+            return;
+        }
+
+        this.isLoading = true;
+        let recoverUser: IUser = {
+            Id: 0,
+            Password: this.password,
+            Username: null,
+            Email: this.email,
+            RecoveryId: this.selectedQuestion,
+            RecoveryAnswer: this.recoveryQuestionAnswer,
+            Name: null,
+            DateOfBirth: null,
+            Cookie: null
+        }
+
+        setTimeout(() => {
+            this.httpService.recoverUser(recoverUser).subscribe(
+                (resp) => {
+                    this.isSuccess = true;
+                    this.isLoading = false;
+                },
+                (err) => {
+                    this.isSuccess = false;
+                    this.isLoading = false;
+                    this.error = err.error.Message;
+                });
+        }, 2000);
     }
 
     hasError(error): boolean {
         return error ? true : false;
+    }
+
+    isLoadingQuestions(isLoading: boolean, questions: Array<IRecoveryQuestion>): boolean {
+        if (isLoading && questions.length == 0) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -7,4 +7,5 @@ export class IUser {
     DateOfBirth: Date;
     RecoveryId: number;
     RecoveryAnswer: string;
+    Cookie: string;
 }

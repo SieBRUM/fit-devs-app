@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlSegment } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
@@ -14,12 +14,15 @@ export class AuthGuard implements CanActivate {
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean {
+        console.log(next);
+        console.log(state);
         return this.checkLogin(state.url);
     }
 
     checkLogin(url: string): boolean {
         // Can access route if not logged in, but page HAS TO BE login / register
         // TODO: add Forgot password page and home page
+
         if (!this.authService.isLoggedIn()) {
             if (url == "/login" || url == "/register" || url == "/recover") {
                 return true;
@@ -31,6 +34,14 @@ export class AuthGuard implements CanActivate {
             }
         }
         console.log(`User did NOT get access to route ${url} because login status is ${this.authService.isLoggedIn()}`);
+
+        if (url == "/login" || url == "/register" || url == "/recover") {
+            this.router.navigateByUrl("/home");
+            return false;
+        }
+
+        this.authService.redirectUrl = url;
+        this.router.navigate(['/login']);
         return false;
     }
 }
