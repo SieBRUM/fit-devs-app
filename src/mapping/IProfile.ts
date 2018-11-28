@@ -1,5 +1,6 @@
 import { IUser } from './IUser'
 import { ILocation } from './ILocation'
+import { IAchievementStatus } from './IAchievementStatus';
 
 export interface IProfile {
     Id: number;
@@ -10,4 +11,6 @@ export interface IProfile {
     User: IUser;
     UserId: number;
     Weigth: number;
+    Achievements?: Array<IAchievementStatus>;
+    Friends?: Array<IProfile>;
 }
