@@ -17,6 +17,7 @@ export class AuthenticationService {
         } else {
             this.userCookie = null;
         }
+
     }
 
     getCurrentUserCookie(): ICookieUser {
@@ -37,6 +38,7 @@ export class AuthenticationService {
 
         if (this.redirectUrl) {
             this.router.navigateByUrl(this.redirectUrl);
+            this.redirectUrl = "";
         } else {
             this.router.navigateByUrl("/home");
         }

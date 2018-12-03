@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { IProfile } from 'src/mapping/IProfile';
 import { IUser } from 'src/mapping/IUser';
 import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
+import { ICookieUser } from 'src/mapping/ICookieUser';
 
 @Component({
     selector: 'app-forgot-password',
@@ -15,6 +16,7 @@ export class AppForgotPasswordPageComponent {
     isSuccess: boolean = false;
     isLoading: boolean = false;
 
+    newUser: ICookieUser;
     error: string = "";
     questions: Array<IRecoveryQuestion> = [];
     email: string = null;
@@ -25,9 +27,11 @@ export class AppForgotPasswordPageComponent {
 
     constructor(
         private httpService: AppService,
-        private router: Router
+        private router: Router,
+        private authenticationService: AuthenticationService
     ) {
         this.isLoading = true;
+        this.newUser = null;
 
         setTimeout(() => {
             this.httpService.getRecoveryQuestions().subscribe(
@@ -78,6 +82,7 @@ export class AppForgotPasswordPageComponent {
                 (resp) => {
                     this.isSuccess = true;
                     this.isLoading = false;
+                    this.newUser = resp.body;
                 },
                 (err) => {
                     this.isSuccess = false;
@@ -85,6 +90,11 @@ export class AppForgotPasswordPageComponent {
                     this.error = err.error.Message;
                 });
         }, 2000);
+    }
+
+    onChangeDone(): void {
+        this.authenticationService.redirectUrl = "/profile";
+        this.authenticationService.setCurrentUser(this.newUser);
     }
 
     hasError(error): boolean {

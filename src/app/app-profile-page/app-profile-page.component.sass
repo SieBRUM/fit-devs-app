@@ -39,7 +39,7 @@ body
 
 .form-label-group
   position: relative
-  margin-bottom: 1rem
+  margin-bottom: .3rem
   .rounded-input
     border-radius: 2rem
     &::-webkit-input-placeholder, &:-ms-input-placeholder, &::-ms-input-placeholder, &::-moz-placeholder, &::placeholder
@@ -69,7 +69,7 @@ body
     border-bottom-left-radius: 2rem
     border-top-left-radius: 2rem
 .input-group-text
-  min-width: 40px
+  min-width: 47px
   text-align: left
 
 .btn
@@ -78,17 +78,30 @@ body
   letter-spacing: .1rem
   font-weight: bold
   padding: 1rem
+  
+
+.btn-sm-round
+  font-size: 80%
+  border-radius: 1rem
+  letter-spacing: .1rem
+  font-weight: bold
 .content
   display: flex
   flex-wrap: wrap
-.left-side
-  flex: 30%
-  margin-left: 2%
-.middle
-  flex: 60%
-.right-side
+.left
   flex: 20%
-  margin-right: 2%
+  background: rgb(241,241,241)
+  background: -moz-linear-gradient(top, rgba(88,171,255,1) 0%, rgba(183,215,255,1) 38%, rgba(255,255,255,1) 100%)
+  background: -webkit-linear-gradient(top, rgba(88,171,255,1) 0%, rgba(183,215,255,1) 38%, rgba(255,255,255,1) 100%)
+  background: linear-gradient(to bottom, rgba(88,171,255,1) 0%, rgba(183,215,255,1) 38%, rgba(255,255,255,1) 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f1f1', endColorstr='#ffffff',GradientType=0 )
+.c-row
+  display: flex;
+  flex-wrap: wrap;
+.main-content
+  flex: 70%;
+  background-color: white;
+  padding: 20px;
 
 /**
  * Progress bars with centered text

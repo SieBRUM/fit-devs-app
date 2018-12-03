@@ -4,36 +4,87 @@
 </div>
 
 <div *ngIf="profile && !isLoading">
+  <!-- START not edit mode-->
   <div class="content" *ngIf="profile && !isLoading">
-    <div class="left-side">
-      <h2>Over {{profile.User.Name}}</h2>
-      Gebruikersnaam: <b>{{profile.User.Username}}</b><br>
-      Geboortedatum: <b>{{toReadableDate(profile.User.DateOfBirth)}}</b><br>
-      Email: <b>{{profile.User.Email}}</b><br>
-      Lengte: <b>{{profile.Length}} cm</b><br>
-      Weigth: <b>{{profile.Weigth}} kg</b><br>
-      Lui: <b>{{profile.IsLazy}}</b><br>
+    <div class="c-row" style="height:92vh;">
+      <div class="left" *ngIf="!isInEdit">
+        <h2 style="text-align: center;">{{profile.User.Name}}</h2>
+        <br />
+        <div class="form-label-group input-group" style="padding-right: 10px;">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <fa name="user"></fa>
+            </div>
+          </div>
+          <input type="text" id="inputUsername" class="form-control rounded-input-with-label" [(ngModel)]="profile.User.Username"
+            disabled>
+        </div>
+        <div class="form-label-group input-group" style="padding-right: 10px;">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <fa name="calendar"></fa>
+            </div>
+          </div>
+          <input type="date" id="inputDate" class="form-control rounded-input-with-label" placeholder="Geboortedatum"
+            disabled [ngModel]="profile.User.DateOfBirth | date:'yyyy-MM-dd'">
+        </div>
+        <div class="form-label-group input-group" style="padding-right: 10px;">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <fa name="envelope"></fa>
+            </div>
+          </div>
+          <input type="email" id="inputEmail" class="form-control rounded-input-with-label" placeholder="Email adres"
+            [(ngModel)]="profile.User.Email" disabled>
+        </div>
+        <div class="form-label-group input-group" style="padding-right: 10px;">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <fa name="user-md"></fa>
+            </div>
+          </div>
+          <input type="number" id="inputLength" class="form-control rounded-input-with-label" placeholder="Lengte"
+            disabled [(ngModel)]="profile.Length">
+        </div>
+        <div class="form-label-group input-group" style="padding-right: 10px;">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <fa name="balance-scale"></fa>
+            </div>
+          </div>
+          <input type="number" id="inputWeigth" class="form-control rounded-input-with-label" placeholder="Gewicht (in kg)"
+            disabled [(ngModel)]="profile.Weigth">
+        </div>
+        <div class="form-label-group input-group" style="padding-right: 10px;" title="Lui?">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon">
+              <fa name="bed"></fa>
+            </div>
+          </div>
+          <input type="text" id="inputIsLazy" class="form-control rounded-input-with-label" placeholder="Is lui?"
+            disabled [(ngModel)]="profile.IsLazy">
+        </div>
+        <button class="btn btn-block" *ngIf="canEdit && !isInEdit" (click)="onEnableEdit()">
+          <fa name="pencil"></fa> Wijzig profiel
+        </button>
+      </div>
     </div>
-    <div class="middle">
-      <h2>Behaalde achievement!</h2>
-      <p>Deze gebruiker heeft nog geen achievements :(</p>
-    </div>
-  </div>
 
-  <div class="content" style="margin-top: 40px;">
-    <div class="left-side">
-      <h2>Vrienden</h2>
+    <div class="main-content">
+      <h2 style="display: inline-block">Behaalde achievement!</h2>
+      <button class="btn btn-sm btn-sm-round btn-success" style="float:right;" *ngIf="canEdit && isInEdit" (click)="onSaveEdit()">
+        <fa name="save"></fa> Opslaan
+      </button>
       <ul>
-        <li *ngFor="let friend of profile.Friends">
-          {{friend.User.Name}}
+        <li *ngFor="let a of completedAchievements">
+          {{a.Achievement.Name}}
         </li>
       </ul>
-    </div>
-    <div class="middle">
+
       <h2>Zo dichtbij!</h2>
-      <div *ngFor="let a of profile?.Achievements">
+      <div *ngFor="let a of incompletedAchievements">
         {{a.Achievement.Name}}
-        <div class="progress" style="width: 50%">
+        <div class="progress" style="width: 40%">
           <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [ngStyle]="{'width': getPercentage(a)+'%'}"
             attr.aria-valuenow="{{getPercentage(a)}}" aria-valuemin="0" aria-valuemax="100">
             <span> <b>{{getPercentage(a)}}% ({{a.CurrentPoints}} / {{a.Achievement.RequiredPoints}})</b></span>

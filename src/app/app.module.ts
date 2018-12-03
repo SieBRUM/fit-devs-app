@@ -22,6 +22,7 @@ import { AppInterceptor } from './app.interceptor';
 import { AppForgotPasswordPageComponent } from './app-forgot-password-page/app-forgot-password-page.component';
 import { AppHomePageComponent } from './app-home-page/app-home-page.component';
 import { AppProfilePageComponent } from './app-profile-page/app-profile-page.component';
+import { AppEditProfilePageComponent } from './app-edit-profile-page/app-edit-profile-page.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AppProfilePageComponent } from './app-profile-page/app-profile-page.com
     AppRegisterPageComponent,
     AppForgotPasswordPageComponent,
     AppHomePageComponent,
-    AppProfilePageComponent
+    AppProfilePageComponent,
+    AppEditProfilePageComponent
   ],
   imports: [
     BrowserModule,

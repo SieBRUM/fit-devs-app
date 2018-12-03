@@ -13,6 +13,18 @@ import { IAchievementStatus } from 'src/mapping/IAchievementStatus';
 export class AppProfilePageComponent {
     profile: IProfile = null;
     isLoading: boolean = false;
+    canEdit: boolean = false;
+    isInEdit: boolean = false;
+    incompletedAchievements: Array<IAchievementStatus> = [];
+    completedAchievements: Array<IAchievementStatus> = [];
+
+    // Edit data
+    newName: string = null;
+    newUsername: string = null;
+    newPassword: string = null;
+    newEmail: string = null;
+    newLength: number = null;
+    newWeigth: number = null;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -25,6 +37,16 @@ export class AppProfilePageComponent {
                 (resp) => {
                     this.isLoading = false;
                     this.profile = resp.body;
+                    this.profile.Achievements.forEach(element => {
+                        if (element.CurrentPoints >= element.Achievement.RequiredPoints) {
+                            this.completedAchievements.push(element);
+                        } else {
+                            this.incompletedAchievements.push(element);
+                        }
+                    });
+                    this.profile.User.DateOfBirth = new Date(Date.parse(this.profile.User.DateOfBirth.toString()));
+                    this.canEdit = true;
+                    this.setNewData(this.profile);
                 },
                 (err) => {
                     if (err.status == 401) {
@@ -45,7 +67,7 @@ export class AppProfilePageComponent {
         if (!date) {
             return "";
         }
-        date = date.substring(0, date.length - 9); // "12345.0"
+        date = date.substring(0, date.length - 9);
 
         var newDate = new Date(date);
         return `${newDate.getUTCDate()}-${newDate.getMonth() + 1}-${newDate.getFullYear()}`
@@ -57,5 +79,30 @@ export class AppProfilePageComponent {
         }
 
         return `${Math.round((achievement.CurrentPoints / achievement.Achievement.RequiredPoints) * 100)}`;
+    }
+
+    onEnableEdit(): void {
+        if (this.canEdit) {
+            this.setNewData(this.profile);
+            this.isInEdit = true;
+        }
+    }
+
+    onSaveEdit(): void {
+        // do some saving
+        if (!this.canEdit) {
+            return;
+        }
+
+        this.isInEdit = false;
+    }
+
+    setNewData(profile: IProfile): void {
+        this.newName = profile.User.Name;
+        this.newEmail = profile.User.Email;
+        this.newLength = profile.Length;
+        this.newWeigth = profile.Weigth;
+        this.newPassword = null;
+        this.newUsername = profile.User.Username;
     }
 } 

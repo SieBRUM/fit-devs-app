@@ -26,8 +26,11 @@ export class AppService {
                     case (error.TIMEOUT):
                         console.log("position timeout");
                         break;
+                    default:
+                        console.log(error);
+                        break;
                 }
-            });
+            }, { enableHighAccuracy: true });
         } else {
             alert("Geolocation is not supported by this browser.");
         }
