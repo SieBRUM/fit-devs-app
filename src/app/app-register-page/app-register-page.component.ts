@@ -12,9 +12,9 @@ import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
     styleUrls: ['./app-register-page.component.sass']
 })
 export class AppRegisterPageComponent {
-    step: number = 1;
-    error: string = "";
-    isLoading: boolean = false;
+    step = 1;
+    error = '';
+    isLoading = false;
     questions: Array<IRecoveryQuestion> = [];
 
     username: string;
@@ -48,21 +48,21 @@ export class AppRegisterPageComponent {
     }
 
     onRegisterUser(): void {
-        this.error = "";
+        this.error = '';
         if (!this.username || !this.password || !this.passwordRepeat
             || !this.name || !this.email || !this.date
             || !this.selectedQuestion || !this.recoveryQuestionAnswer) {
-            this.error = "Alle velden zijn verplicht!";
+            this.error = 'Alle velden zijn verplicht!';
             return;
         }
 
-        if (this.password != this.passwordRepeat) {
-            this.error = "Wachtwoorden komen niet overeen!";
+        if (this.password !== this.passwordRepeat) {
+            this.error = 'Wachtwoorden komen niet overeen!';
             return;
         }
 
         this.isLoading = true;
-        var userData = {
+        const userData = {
             Username: this.username,
             Email: this.email
         };
@@ -82,13 +82,13 @@ export class AppRegisterPageComponent {
 
     onRegisterProfile(): void {
         if (!this.length || !this.weigth) {
-            this.error = "Alle velden zijn verplicht!";
+            this.error = 'Alle velden zijn verplicht!';
             return;
         }
 
         this.isLoading = true;
 
-        let profile: IProfile = {
+        const profile: IProfile = {
             Id: 0,
             IsLazy: false,
             Length: this.length,
@@ -111,7 +111,7 @@ export class AppRegisterPageComponent {
             },
             UserId: 0,
             Weigth: this.weigth
-        }
+        };
 
         setTimeout(() => {
             this.httpService.registerProfile(profile).subscribe(
@@ -131,7 +131,7 @@ export class AppRegisterPageComponent {
     }
 
     onClearError(): void {
-        this.error = "";
+        this.error = '';
     }
 
     hasError(error): boolean {
@@ -139,11 +139,11 @@ export class AppRegisterPageComponent {
     }
 
     checkIfStep(step: number): boolean {
-        return step == this.step ? true : false;
+        return step === this.step ? true : false;
     }
 
     isLoadingQuestions(isLoading: boolean, questions: Array<IRecoveryQuestion>): boolean {
-        if (isLoading && questions.length == 0) {
+        if (isLoading && questions.length === 0) {
             return true;
         }
 

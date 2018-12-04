@@ -10,9 +10,9 @@ import { IUser } from 'src/mapping/IUser';
     styleUrls: ['./app-login-page.component.sass']
 })
 export class AppLoginPageComponent {
-    loggingIn: boolean = false;
+    loggingIn = false;
     rememberUsername: string;
-    error: string = "";
+    error = '';
     username: string;
     password: string;
 
@@ -24,14 +24,14 @@ export class AppLoginPageComponent {
 
     login() {
         if (!this.username || !this.password) {
-            this.error = "Gebruikersnaam en wachtwoord moeten ingevuld zijn."
+            this.error = 'Gebruikersnaam en wachtwoord moeten ingevuld zijn.';
             return;
         }
 
         this.loggingIn = true;
-        this.error = "";
+        this.error = '';
 
-        var user: IUser = {
+        const user: IUser = {
             Username: this.username,
             Password: this.password,
             Name: null,
@@ -65,7 +65,7 @@ export class AppLoginPageComponent {
     }
 
     onClearError(): void {
-        this.error = "";
+        this.error = '';
     }
 
     hasError(error: string): boolean {

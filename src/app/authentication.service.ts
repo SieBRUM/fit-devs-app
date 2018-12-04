@@ -7,7 +7,7 @@ import { ICookieUser } from 'src/mapping/ICookieUser';
 })
 export class AuthenticationService {
     private userCookie: ICookieUser;
-    public redirectUrl: string = "";
+    public redirectUrl = '';
 
     constructor(
         private router: Router
@@ -32,19 +32,23 @@ export class AuthenticationService {
         return this.userCookie.Cookie;
     }
 
-    setCurrentUser(cookie: ICookieUser): void {
+    setCurrentUser(cookie: ICookieUser, navigate: boolean = true): void {
         this.userCookie = cookie;
         localStorage.setItem('user-cookie', JSON.stringify(cookie));
 
+        if (!navigate) {
+            return;
+        }
+
         if (this.redirectUrl) {
             this.router.navigateByUrl(this.redirectUrl);
-            this.redirectUrl = "";
+            this.redirectUrl = '';
         } else {
-            this.router.navigateByUrl("/home");
+            this.router.navigateByUrl('/home');
         }
     }
 
-    logout(url: string = "") {
+    logout(url: string = '') {
         this.redirectUrl = url;
         localStorage.removeItem('user-cookie');
         this.userCookie = null;

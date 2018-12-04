@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppService } from './app.service';
 import { IProfile } from 'src/mapping/IProfile';
 import { AuthenticationService } from './authentication.service';
@@ -8,13 +8,12 @@ import { AuthenticationService } from './authentication.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'fit-devs-app';
   profiles: Array<IProfile>;
 
   constructor(
-    private HttpService: AppService,
-    private AuthenticationService: AuthenticationService
+    private HttpService: AppService
   ) { }
 
   ngOnInit() {

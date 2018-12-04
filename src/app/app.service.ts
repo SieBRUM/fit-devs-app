@@ -8,23 +8,23 @@ import { ICookieUser } from 'src/mapping/ICookieUser';
 
 @Injectable()
 export class AppService {
-    private readonly API_URL: string = "http://localhost:8080/backend/api/";
+    private readonly API_URL: string = 'http://localhost:8080/backend/api/';
     private location: Coordinates;
 
     constructor(
         private http: HttpClient
     ) {
         if (navigator.geolocation) {
-            navigator.geolocation.watchPosition((response) => { this.location = response.coords }, (error) => {
+            navigator.geolocation.watchPosition((response) => { this.location = response.coords; }, (error) => {
                 switch (error.code) {
                     case (error.PERMISSION_DENIED):
-                        console.log("permission denied");
+                        console.log('permission denied');
                         break;
                     case (error.POSITION_UNAVAILABLE):
-                        console.log("position unavailable");
+                        console.log('position unavailable');
                         break;
                     case (error.TIMEOUT):
-                        console.log("position timeout");
+                        console.log('position timeout');
                         break;
                     default:
                         console.log(error);
@@ -32,7 +32,7 @@ export class AppService {
                 }
             }, { enableHighAccuracy: true });
         } else {
-            alert("Geolocation is not supported by this browser.");
+            alert('Geolocation is not supported by this browser.');
         }
     }
 
@@ -63,6 +63,10 @@ export class AppService {
 
     recoverUser(profile: IUser): Observable<HttpResponse<ICookieUser>> {
         return this.http.post<ICookieUser>(`${this.API_URL}forgotpassword`, profile, { observe: 'response' });
+    }
+
+    editUser(profile: IProfile): Observable<HttpResponse<IProfile>> {
+        return this.http.post<IProfile>(`${this.API_URL}edituser`, profile, { observe: 'response' });
     }
 
     getPosition(): Coordinates {

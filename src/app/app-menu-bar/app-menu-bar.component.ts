@@ -11,8 +11,7 @@ import { Router } from '@angular/router';
 export class AppMenuBarComponent {
 
     constructor(
-        private AuthenticationService: AuthenticationService,
-        private HttpService: AppService,
+        private authenticationService: AuthenticationService,
         private router: Router
     ) { }
 
@@ -21,11 +20,11 @@ export class AppMenuBarComponent {
     }
 
     logout(): void {
-        this.AuthenticationService.logout();
+        this.authenticationService.logout();
     }
 
     getUsername(): string {
-        return this.AuthenticationService.getCurrentUserCookie().Name;
+        return this.authenticationService.getCurrentUserCookie().Name;
     }
 
     navigate(route: string): void {
@@ -33,10 +32,10 @@ export class AppMenuBarComponent {
     }
 
     getClass(route: string): string {
-        if (this.router.url == route) {
-            return "btn my-2 my-sm-0 menu-bar-item selected"
+        if (this.router.url === route) {
+            return 'btn my-2 my-sm-0 menu-bar-item selected';
         } else {
-            return "btn my-2 my-sm-0 menu-bar-item"
+            return 'btn my-2 my-sm-0 menu-bar-item';
         }
     }
 }

@@ -7,7 +7,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <div *ngIf="AuthenticationService.isLoggedIn()">
+      <div *ngIf="authenticationService.isLoggedIn()">
         <button [class]="getClass('/profile')" (click)="navigate('/profile')"> Mijn profiel
         </button>
         <button [class]="getClass('/friends')" (click)="navigate('/friends')">Mijn vrienden
@@ -17,12 +17,12 @@
       </div>
     </ul>
 
-    <div *ngIf="AuthenticationService.isLoggedIn()">
+    <div *ngIf="authenticationService.isLoggedIn()">
       <button class="btn btn-outline-danger my-2 my-sm-0" (click)="logout()">{{getUsername()}}
         <fa name=" fa-sign-out"></fa>
       </button>
     </div>
-    <div *ngIf="!AuthenticationService.isLoggedIn()">
+    <div *ngIf="!authenticationService.isLoggedIn()">
       <button class="btn btn-outline-success my-2 my-sm-0" (click)="login()">Inloggen
         <fa name=" fa-sign-in"></fa>
       </button>

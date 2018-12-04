@@ -11,7 +11,7 @@ export class AppInterceptor implements HttpInterceptor {
 
         const token = this.authService.getAuthorizationToken();
         if (token) {
-            var headers = req.headers;
+            let headers = req.headers;
             headers = req.headers.append('Authorization', token);
             req = req.clone({ headers: headers });
         }

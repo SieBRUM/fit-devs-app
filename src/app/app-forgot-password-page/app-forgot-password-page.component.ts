@@ -13,17 +13,17 @@ import { ICookieUser } from 'src/mapping/ICookieUser';
     styleUrls: ['./app-forgot-password-page.component.sass']
 })
 export class AppForgotPasswordPageComponent {
-    isSuccess: boolean = false;
-    isLoading: boolean = false;
+    isSuccess = false;
+    isLoading = false;
 
     newUser: ICookieUser;
-    error: string = "";
+    error = '';
     questions: Array<IRecoveryQuestion> = [];
     email: string = null;
     recoveryQuestionAnswer: string = null;
     selectedQuestion: number = null;
-    password: string = "";
-    passwordRepeat: string = "";
+    password = '';
+    passwordRepeat = '';
 
     constructor(
         private httpService: AppService,
@@ -48,24 +48,28 @@ export class AppForgotPasswordPageComponent {
 
     onCancel(): void {
         this.isSuccess = false;
-        this.error = "";
+        this.error = '';
         this.router.navigateByUrl('/login');
     }
 
+    GetUsers(): void {
+        this.httpService.getUsers();
+    }
+
     onRequestRecover(): void {
-        this.error = "";
+        this.error = '';
         if (!this.recoveryQuestionAnswer || !this.email || !this.password || !this.passwordRepeat || !this.selectedQuestion) {
-            this.error = "Alle velden zijn verplicht!";
+            this.error = 'Alle velden zijn verplicht!';
             return;
         }
 
-        if (this.passwordRepeat != this.password) {
-            this.error = "Wachtwoorden komen niet overeen!";
+        if (this.passwordRepeat !== this.password) {
+            this.error = 'Wachtwoorden komen niet overeen!';
             return;
         }
 
         this.isLoading = true;
-        let recoverUser: IUser = {
+        const recoverUser: IUser = {
             Id: 0,
             Password: this.password,
             Username: null,
@@ -75,7 +79,7 @@ export class AppForgotPasswordPageComponent {
             Name: null,
             DateOfBirth: null,
             Cookie: null
-        }
+        };
 
         setTimeout(() => {
             this.httpService.recoverUser(recoverUser).subscribe(
@@ -93,7 +97,7 @@ export class AppForgotPasswordPageComponent {
     }
 
     onChangeDone(): void {
-        this.authenticationService.redirectUrl = "/profile";
+        this.authenticationService.redirectUrl = '/profile';
         this.authenticationService.setCurrentUser(this.newUser);
     }
 
@@ -102,7 +106,7 @@ export class AppForgotPasswordPageComponent {
     }
 
     isLoadingQuestions(isLoading: boolean, questions: Array<IRecoveryQuestion>): boolean {
-        if (isLoading && questions.length == 0) {
+        if (isLoading && questions.length === 0) {
             return true;
         }
 

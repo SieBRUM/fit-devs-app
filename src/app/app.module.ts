@@ -22,7 +22,6 @@ import { AppInterceptor } from './app.interceptor';
 import { AppForgotPasswordPageComponent } from './app-forgot-password-page/app-forgot-password-page.component';
 import { AppHomePageComponent } from './app-home-page/app-home-page.component';
 import { AppProfilePageComponent } from './app-profile-page/app-profile-page.component';
-import { AppEditProfilePageComponent } from './app-edit-profile-page/app-edit-profile-page.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +31,7 @@ import { AppEditProfilePageComponent } from './app-edit-profile-page/app-edit-pr
     AppRegisterPageComponent,
     AppForgotPasswordPageComponent,
     AppHomePageComponent,
-    AppProfilePageComponent,
-    AppEditProfilePageComponent
+    AppProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +43,10 @@ import { AppEditProfilePageComponent } from './app-edit-profile-page/app-edit-pr
     SnackBarModule.forRoot({
       template: TemplateType.DARK,
       errorOptions: {
+        closeTimeOut: 5000,
+        isClose: true
+      },
+      successOptions: {
         closeTimeOut: 5000,
         isClose: true
       }

@@ -22,19 +22,19 @@ export class AuthGuard implements CanActivate {
         // TODO: add Forgot password page and home page
 
         if (!this.authService.isLoggedIn()) {
-            if (url == "/login" || url == "/register" || url == "/recover") {
+            if (url === '/login' || url === '/register' || url === '/recover') {
                 return true;
             }
         } else {
             // Can access route if logged in AND not routing to login page / register page
-            if (url != "/login" && url != "/register" && url != "/recover") {
+            if (url !== '/login' && url !== '/register' && url !== '/recover') {
                 return true;
             }
         }
         console.log(`User did NOT get access to route ${url} because login status is ${this.authService.isLoggedIn()}`);
 
-        if (url == "/login" || url == "/register" || url == "/recover") {
-            this.router.navigateByUrl("/home");
+        if (url === '/login' || url === '/register' || url === '/recover') {
+            this.router.navigateByUrl('/home');
             return false;
         }
 
