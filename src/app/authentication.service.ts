@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ICookieUser } from 'src/mapping/ICookieUser';
+import { WebsocketService } from './websocket.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,8 @@ export class AuthenticationService {
     public redirectUrl = '';
 
     constructor(
-        private router: Router
+        private router: Router,
+        private websocketService: WebsocketService
     ) {
         if (localStorage.getItem('user-cookie')) {
             this.userCookie = JSON.parse(localStorage.getItem('user-cookie'));
@@ -46,6 +48,8 @@ export class AuthenticationService {
         } else {
             this.router.navigateByUrl('/home');
         }
+
+        this.websocketService.onSetNewCookie();
     }
 
     logout(url: string = '') {

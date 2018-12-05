@@ -21,6 +21,7 @@ export class WebsocketService {
             console.log('Called configureWebsocket when its already configured.');
             return;
         }
+
         const that = this;
 
         this.connection = $.hubConnection(this.CONNECTION_LINK, { useDefaultPath: false });
@@ -41,11 +42,7 @@ export class WebsocketService {
             .done(function () {
                 console.log('Now connected, connection ID=' + that.connection.id);
                 console.log(that.connection);
-                that.hub.invoke('OnStartConnection', that.authenticationService.getCurrentUserCookie().Cookie).done(function () {
-                    console.log('Invocation of NewContosoChatMessage succeeded');
-                }).fail(function (error) {
-                    console.log('Invocation of NewContosoChatMessage failed. Error: ' + error);
-                });
+                that.onSetNewCookie();
             })
             .fail(function () { console.log('Could not connect'); });
     }
@@ -62,5 +59,17 @@ export class WebsocketService {
         console.log(newFriendRuquestName);
         console.log(this.notificationService);
         alert(`Gebruiker ${newFriendRuquestName} heeft een vriendenverzoek verstuurd naar je!`);
+    }
+
+    onSetNewCookie(): void {
+        if (this.authenticationService.getCurrentUserCookie() == null) {
+            return;
+        }
+
+        this.hub.invoke('OnStartConnection', this.authenticationService.getCurrentUserCookie().Cookie).done(function () {
+            console.log('Invocation of NewContosoChatMessage succeeded');
+        }).fail(function (error) {
+            console.log('Invocation of NewContosoChatMessage failed. Error: ' + error);
+        });
     }
 }
