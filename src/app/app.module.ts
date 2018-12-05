@@ -22,6 +22,8 @@ import { AppInterceptor } from './app.interceptor';
 import { AppForgotPasswordPageComponent } from './app-forgot-password-page/app-forgot-password-page.component';
 import { AppHomePageComponent } from './app-home-page/app-home-page.component';
 import { AppProfilePageComponent } from './app-profile-page/app-profile-page.component';
+import { AppSearchPageComponent } from './app-search-page/app-search-page.component';
+import { WebsocketService } from './websocket.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { AppProfilePageComponent } from './app-profile-page/app-profile-page.com
     AppRegisterPageComponent,
     AppForgotPasswordPageComponent,
     AppHomePageComponent,
-    AppProfilePageComponent
+    AppProfilePageComponent,
+    AppSearchPageComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ import { AppProfilePageComponent } from './app-profile-page/app-profile-page.com
   providers: [
     AppService,
     AuthenticationService,
+    WebsocketService,
     SnackBarService,
     {
       provide: HTTP_INTERCEPTORS,

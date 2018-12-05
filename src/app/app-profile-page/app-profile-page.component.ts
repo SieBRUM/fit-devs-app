@@ -151,6 +151,11 @@ export class AppProfilePageComponent {
         }, 1000);
     }
 
+    onCancel(): void {
+        this.isInEdit = false;
+        this.setNewData(this.profile);
+    }
+
     setNewData(profile: IProfile): void {
         this.newName = profile.User.Name;
         this.newEmail = profile.User.Email;

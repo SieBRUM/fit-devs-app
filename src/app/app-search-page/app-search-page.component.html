@@ -1,0 +1,47 @@
+<div *ngIf="isLoading" style="text-align: center;">
+  <fa name="cog" size="5x" animation="spin"></fa>
+  <h1>Aan het zoeken...</h1>
+</div>
+
+<div *ngIf="!isLoading && !hasResults(receivedData) && (searchQuery == '' || searchQuery == null || searchQuery == undefined)"
+  style="text-align: center;">
+  <fa name="exclamation-triangle" size="4x"></fa>
+  <h1>Geen gebruikersnaam ingevuld</h1>
+</div>
+
+<div *ngIf="!isLoading && !hasResults(receivedData) && !(searchQuery == '' || searchQuery == null || searchQuery == undefined)"
+  style="text-align: center;">
+  <fa name="search-minus" size="4x"></fa>
+  <h1>Geen resultaten met de gebruikersnaam '<b>{{searchQuery}}</b>'</h1>
+</div>
+
+<table class="table table-striped table-hover" *ngIf="!isLoading && hasResults(receivedData)">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Gebruikersnaam</th>
+      <th scope="col">Volledige naam</th>
+      <th scope="col">Geboortedatum</th>
+      <th scope="col">Toevoegen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of receivedData">
+      <th scope="row">{{user.Id}}</th>
+      <td>{{user.Username}}</td>
+      <td>{{user.Name}}</td>
+      <td>{{user.DateOfBirth}}</td>
+      <td>
+        <button class="btn btn-success btn-sm" (click)="onUserAdd(user)" *ngIf="shouldShowPrimary(user)">
+          <fa name="{{getButtonIcon(user)}}"></fa>
+          {{enumToReadable(user)}}
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="onRemoveUser(user)" *ngIf="shouldShowDanger(user)">
+          <fa name="{{getButtonIcon(user)}}"></fa>
+          {{enumToReadable(user)}}
+        </button>
+        <span *ngIf="shouldShowText(user)">Verzoek is in aanvraag</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

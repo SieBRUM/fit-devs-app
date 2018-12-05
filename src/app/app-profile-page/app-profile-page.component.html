@@ -129,6 +129,10 @@
             Opslaan...
           </div>
         </button>
+        <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()" [hidden]="isSavingChanges || !isInEdit">
+          Annuleren
+          <fa name="times"></fa>
+        </button>
       </div>
     </div>
     <!-- STOP Profile bar left-->

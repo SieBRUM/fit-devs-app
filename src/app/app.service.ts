@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IUser } from 'src/mapping/IUser';
 import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
 import { ICookieUser } from 'src/mapping/ICookieUser';
+import { IUserFlat } from 'src/mapping/IUserFlat';
 
 @Injectable()
 export class AppService {
@@ -67,6 +68,14 @@ export class AppService {
 
     editUser(profile: IProfile): Observable<HttpResponse<IProfile>> {
         return this.http.post<IProfile>(`${this.API_URL}edituser`, profile, { observe: 'response' });
+    }
+
+    getUsersByUsername(username: string): Observable<HttpResponse<Array<IUserFlat>>> {
+        return this.http.post<Array<IUserFlat>>(`${this.API_URL}searchfriend`, { Username: username }, { observe: 'response' });
+    }
+
+    addFriend(user: IProfile): Observable<HttpResponse<Array<any>>> {
+        return this.http.post<Array<any>>(`${this.API_URL}addfriend`, user, { observe: 'response' });
     }
 
     getPosition(): Coordinates {

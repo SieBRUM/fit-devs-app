@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AppService } from './../app.service';
 import { AuthenticationService } from '../authentication.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-menu-bar',
@@ -9,11 +9,20 @@ import { Router } from '@angular/router';
     styleUrls: ['./app-menu-bar.component.sass']
 })
 export class AppMenuBarComponent {
+    searchUsername = '';
 
     constructor(
         private authenticationService: AuthenticationService,
-        private router: Router
-    ) { }
+        private router: Router,
+        private activatedRoute: ActivatedRoute
+    ) {
+        this.activatedRoute.queryParams.subscribe(
+            (resp) => {
+                this.searchUsername = resp['query'];
+            }
+        );
+
+    }
 
     login(): void {
         this.router.navigateByUrl('/login');
@@ -37,5 +46,13 @@ export class AppMenuBarComponent {
         } else {
             return 'btn my-2 my-sm-0 menu-bar-item';
         }
+    }
+
+    onSearchUsername(): void {
+        if (!this.searchUsername) {
+            return;
+        }
+
+        this.router.navigate(['/search'], { queryParams: { query: this.searchUsername } });
     }
 }

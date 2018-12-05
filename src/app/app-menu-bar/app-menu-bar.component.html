@@ -17,6 +17,18 @@
       </div>
     </ul>
 
+    <form class="form-inline mr-3" *ngIf="authenticationService.isLoggedIn()">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Zoek gebruikersnaam" aria-label="Zoek gebruikersnaam"
+          aria-describedby="button-addon2" [(ngModel)]="searchUsername" (keydown.enter)="onSearchUsername()" name="searchBarInput">
+        <div class="input-group-append">
+          <button class="btn btn-outline-success" type="button" id="button-addon2" (click)="onSearchUsername()">
+            <fa name="search"></fa>
+          </button>
+        </div>
+      </div>
+    </form>
+
     <div *ngIf="authenticationService.isLoggedIn()">
       <button class="btn btn-outline-danger my-2 my-sm-0" (click)="logout()">{{getUsername()}}
         <fa name=" fa-sign-out"></fa>

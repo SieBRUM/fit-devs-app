@@ -31,7 +31,10 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "src/styles.sass"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/signalr/jquery.signalR.min.js"
+            ]
           },
           "configurations": {
             "production": {
