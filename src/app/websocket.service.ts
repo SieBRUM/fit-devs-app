@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { SnackBarService } from 'ng7-snack-bar';
-import { AuthenticationService } from './authentication.service';
+import { ICookieUser } from 'src/mapping/ICookieUser';
 declare var $: any;
 
 @Injectable({
@@ -13,7 +13,6 @@ export class WebsocketService {
 
     constructor(
         private notificationService: SnackBarService,
-        private authenticationService: AuthenticationService
     ) { }
 
     configureWebsocket(): void {
@@ -50,8 +49,8 @@ export class WebsocketService {
 
     onAddFriend(userId: number): void {
         const that = this;
-        this.hub.invoke('AddFriend', this.authenticationService.getCurrentUserCookie().Cookie, userId).done(function () {
-            console.log('Addfriend gelukt' + that.authenticationService.getCurrentUserCookie().Cookie + 'USER: ' + userId);
+        this.hub.invoke('AddFriend', this.getCurrentUserCookie().Cookie, userId).done(function () {
+            console.log('Addfriend gelukt' + that.getCurrentUserCookie().Cookie + 'USER: ' + userId);
         }).fail(function (error) { console.log(error); });
     }
 
@@ -62,14 +61,22 @@ export class WebsocketService {
     }
 
     onSetNewCookie(): void {
-        if (this.authenticationService.getCurrentUserCookie() == null) {
+        if (this.getCurrentUserCookie() == null) {
             return;
         }
 
-        this.hub.invoke('OnStartConnection', this.authenticationService.getCurrentUserCookie().Cookie).done(function () {
+        this.hub.invoke('OnStartConnection', this.getCurrentUserCookie().Cookie).done(function () {
             console.log('Invocation of NewContosoChatMessage succeeded');
         }).fail(function (error) {
             console.log('Invocation of NewContosoChatMessage failed. Error: ' + error);
         });
+    }
+
+    getCurrentUserCookie(): ICookieUser {
+        if (localStorage.getItem('user-cookie')) {
+            return JSON.parse(localStorage.getItem('user-cookie'));
+        } else {
+            return null;
+        }
     }
 }

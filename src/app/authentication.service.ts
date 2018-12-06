@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { ICookieUser } from 'src/mapping/ICookieUser';
 import { WebsocketService } from './websocket.service';
