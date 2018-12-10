@@ -6,6 +6,7 @@ import { IUser } from 'src/mapping/IUser';
 import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
 import { ICookieUser } from 'src/mapping/ICookieUser';
 import { IUserFlat } from 'src/mapping/IUserFlat';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class AppService {
@@ -13,7 +14,8 @@ export class AppService {
     private location: Coordinates;
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private snack: MatSnackBar
     ) {
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition((response) => { this.location = response.coords; }, (error) => {
@@ -80,5 +82,12 @@ export class AppService {
 
     getPosition(): Coordinates {
         return this.location;
+    }
+
+
+    saus(gebruikersnaam: string): void {
+        setTimeout(() => {
+            this.snack.open(`Je bent uitgenodigd door ${gebruikersnaam}!`, 'Fuck yea!');
+        }, 1000);
     }
 }

@@ -7,6 +7,7 @@ import { AlertModule } from 'ngx-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { SnackBarModule, SnackBarService, TemplateType } from 'ng7-snack-bar';
 import { StoreModule } from '@ngrx/store';
+import { MatDialogModule, MatDialogContainer } from '@angular/material/dialog';
 
 // Personal
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +25,10 @@ import { AppHomePageComponent } from './app-home-page/app-home-page.component';
 import { AppProfilePageComponent } from './app-profile-page/app-profile-page.component';
 import { AppSearchPageComponent } from './app-search-page/app-search-page.component';
 import { WebsocketService } from './websocket.service';
+import { FriendRequestModalComponent } from './modals/friend-request-modal/friend-request-modal.component';
+import { MatFormFieldModule, MatSnackBarModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +39,8 @@ import { WebsocketService } from './websocket.service';
     AppForgotPasswordPageComponent,
     AppHomePageComponent,
     AppProfilePageComponent,
-    AppSearchPageComponent
+    AppSearchPageComponent,
+    FriendRequestModalComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +48,10 @@ import { WebsocketService } from './websocket.service';
     HttpClientModule,
     AngularFontAwesomeModule,
     FormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatSnackBarModule,
     AlertModule.forRoot(),
     SnackBarModule.forRoot({
       template: TemplateType.DARK,
@@ -66,6 +76,9 @@ import { WebsocketService } from './websocket.service';
       useClass: AppInterceptor,
       multi: true
     }
+  ],
+  entryComponents: [
+    FriendRequestModalComponent
   ],
   bootstrap: [AppComponent]
 })
