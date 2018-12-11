@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { IProfile } from 'src/mapping/IProfile';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IUser } from 'src/mapping/IUser';
 import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
 import { ICookieUser } from 'src/mapping/ICookieUser';
@@ -17,6 +17,7 @@ export class AppService {
         private http: HttpClient,
         private snack: MatSnackBar
     ) {
+
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition((response) => { this.location = response.coords; }, (error) => {
                 switch (error.code) {
@@ -38,6 +39,8 @@ export class AppService {
             alert('Geolocation is not supported by this browser.');
         }
     }
+
+    public notifications: Array<any> = [];
 
 
     getUsers(): Observable<HttpResponse<Array<IProfile>>> {
@@ -76,18 +79,16 @@ export class AppService {
         return this.http.post<Array<IUserFlat>>(`${this.API_URL}searchfriend`, { Username: username }, { observe: 'response' });
     }
 
-    addFriend(user: IProfile): Observable<HttpResponse<Array<any>>> {
-        return this.http.post<Array<any>>(`${this.API_URL}addfriend`, user, { observe: 'response' });
+    addFriend(friendId: Number): Observable<HttpResponse<any>> {
+        return this.http.post<any>(`${this.API_URL}addfriend`, friendId, { observe: 'response' });
+    }
+
+    removeFriend(friendId: Number): Observable<HttpResponse<Array<any>>> {
+        return this.http.post<any>(`${this.API_URL}removefriend`, friendId, { observe: 'response' });
     }
 
     getPosition(): Coordinates {
         return this.location;
     }
 
-
-    saus(gebruikersnaam: string): void {
-        setTimeout(() => {
-            this.snack.open(`Je bent uitgenodigd door ${gebruikersnaam}!`, 'Fuck yea!');
-        }, 1000);
-    }
 }

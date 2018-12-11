@@ -8,6 +8,10 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { SnackBarModule, SnackBarService, TemplateType } from 'ng7-snack-bar';
 import { StoreModule } from '@ngrx/store';
 import { MatDialogModule, MatDialogContainer } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatFormFieldModule, MatSnackBarModule, MatIconModule, MatSortModule, MatChipsModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 
 // Personal
 import { AppRoutingModule } from './app-routing.module';
@@ -25,9 +29,7 @@ import { AppHomePageComponent } from './app-home-page/app-home-page.component';
 import { AppProfilePageComponent } from './app-profile-page/app-profile-page.component';
 import { AppSearchPageComponent } from './app-search-page/app-search-page.component';
 import { WebsocketService } from './websocket.service';
-import { FriendRequestModalComponent } from './modals/friend-request-modal/friend-request-modal.component';
-import { MatFormFieldModule, MatSnackBarModule } from '@angular/material';
-import { MatButtonModule } from '@angular/material/button';
+
 
 
 @NgModule({
@@ -39,8 +41,7 @@ import { MatButtonModule } from '@angular/material/button';
     AppForgotPasswordPageComponent,
     AppHomePageComponent,
     AppProfilePageComponent,
-    AppSearchPageComponent,
-    FriendRequestModalComponent
+    AppSearchPageComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +53,10 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatIconModule,
+    MatBadgeModule,
+    MatTableModule,
+    MatChipsModule,
     AlertModule.forRoot(),
     SnackBarModule.forRoot({
       template: TemplateType.DARK,
@@ -76,9 +81,6 @@ import { MatButtonModule } from '@angular/material/button';
       useClass: AppInterceptor,
       multi: true
     }
-  ],
-  entryComponents: [
-    FriendRequestModalComponent
   ],
   bootstrap: [AppComponent]
 })

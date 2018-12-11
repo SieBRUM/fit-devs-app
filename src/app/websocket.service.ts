@@ -1,8 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
-import { SnackBarService } from 'ng7-snack-bar';
 import { ICookieUser } from 'src/mapping/ICookieUser';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { FriendRequestModalComponent } from './modals/friend-request-modal/friend-request-modal.component';
+import { MatSnackBar } from '@angular/material';
 import { AppService } from './app.service';
 
 declare var $: any;
@@ -16,10 +14,11 @@ export class WebsocketService {
     private hub: any;
 
     constructor(
-        private dialogService: MatDialog,
         private snack: MatSnackBar,
         private appService: AppService
-    ) { }
+    ) {
+        this._declareEventListeners();
+    }
 
     configureWebsocket(): void {
         if (this.connection != null && this.connection !== undefined) {
@@ -32,8 +31,6 @@ export class WebsocketService {
         this.connection = $.hubConnection(this.CONNECTION_LINK, { useDefaultPath: false });
         this.hub = this.connection.createHubProxy('mainHub');
 
-
-
         this.connection.start()
             .done(function () {
                 console.log('Now connected, connection ID=' + that.connection.id);
@@ -43,7 +40,13 @@ export class WebsocketService {
             .fail(function () { console.log('Could not connect'); });
 
         this.hub.on('onReceiveFriendRequest', (newFriendName: string) => {
-            this.onNotification(newFriendName);
+            const event = new CustomEvent('triggerNewFriend', { 'detail': newFriendName });
+            document.dispatchEvent(event);
+        });
+
+        this.hub.on('newNotification', (data: any) => {
+            const event = new CustomEvent('triggerNewFriend', { 'detail': data });
+            document.dispatchEvent(event);
         });
     }
 
@@ -56,8 +59,15 @@ export class WebsocketService {
     }
 
     onNotification(newName): void {
-        // Lets add some fancy modules eh ?
-        this.appService.saus(newName);
+        this.snack.open(`Nieuw vriendverzoek van '${newName}'!`, 'Yay!', {
+            duration: 6000,
+            panelClass: 'friend-request-snack',
+            horizontalPosition: 'end'
+        });
+    }
+
+    onSetNotifications(data: any): void {
+        this.appService.notifications = data;
     }
 
     onSetNewCookie(): void {
@@ -78,5 +88,20 @@ export class WebsocketService {
         } else {
             return null;
         }
+    }
+
+    // Quite a shame, but due to having issues with Sockets and triggering this particular service
+    // We have to use custom events. All events will be documented in the constructor
+    // of this service.
+    private _declareEventListeners(): void {
+        const that = this;
+
+        document.addEventListener('triggerNewFriend', function (e: any) {
+            that.onNotification(e.detail);
+        });
+
+        document.addEventListener('newNotification', function (e: any) {
+            that.onSetNotifications(e.detail);
+        });
     }
 }

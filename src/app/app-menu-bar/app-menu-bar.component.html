@@ -29,6 +29,12 @@
       </div>
     </form>
 
+    <form class="form-inline mr-3" *ngIf="appService.notifications.length !== 0">
+      <button mat-mini-fab color="primary">
+        <mat-icon matBadge="{{appService.notifications.length}}" matBadgeColor="warn">notifications</mat-icon>
+      </button>
+    </form>
+
     <div *ngIf="authenticationService.isLoggedIn()">
       <button class="btn btn-outline-danger my-2 my-sm-0" (click)="logout()">{{getUsername()}}
         <fa name=" fa-sign-out"></fa>

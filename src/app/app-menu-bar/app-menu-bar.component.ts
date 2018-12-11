@@ -14,7 +14,8 @@ export class AppMenuBarComponent {
     constructor(
         private authenticationService: AuthenticationService,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private appService: AppService
     ) {
         this.activatedRoute.queryParams.subscribe(
             (resp) => {

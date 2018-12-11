@@ -17,6 +17,8 @@ export class AppSearchPageComponent {
     searchQuery: '';
     receivedData: Array<IUserFlat> = [];
     isLoading = false;
+    displayedColumns = ['Gebruikersnaam', 'Naam', 'Geboortedatum', 'Acties'];
+
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -38,8 +40,8 @@ export class AppSearchPageComponent {
         if (!this.searchQuery) {
             return;
         }
-
         this.isLoading = true;
+
         setTimeout(() => {
             this.appService.getUsersByUsername(this.searchQuery).subscribe(
                 (resp) => {
@@ -76,85 +78,20 @@ export class AppSearchPageComponent {
         return data.length > 0 ? true : false;
     }
 
-    getButtonIcon(user: IUserFlat): string {
-        switch (user.HasRequestOpen) {
-            case FriendRequestStatus.HasSend:
-                return 'alarm-clock';
-            case FriendRequestStatus.HasReceived:
-                return 'check';
-            case FriendRequestStatus.AreFriends:
-                return 'minus';
-            default:
-                return 'plus';
-        }
-    }
-
-    shouldShowPrimary(user: IUserFlat): boolean {
-        switch (user.HasRequestOpen) {
-            case FriendRequestStatus.HasSend:
-                return false;
-            case FriendRequestStatus.HasReceived:
-                return true;
-            case FriendRequestStatus.AreFriends:
-                return false;
-            default:
-                return true;
-        }
-    }
-
-    shouldShowDanger(user: IUserFlat): boolean {
-        switch (user.HasRequestOpen) {
-            case FriendRequestStatus.HasSend:
-            case FriendRequestStatus.HasReceived:
-                return false;
-            case FriendRequestStatus.AreFriends:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-
-    shouldShowText(user: IUserFlat): boolean {
-        switch (user.HasRequestOpen) {
-            case FriendRequestStatus.HasSend:
-                return true;
-            case FriendRequestStatus.HasReceived:
-            case FriendRequestStatus.AreFriends:
-            default:
-                return false;
-        }
-    }
-
-    enumToReadable(user: IUserFlat): string {
-        switch (user.HasRequestOpen) {
-            case FriendRequestStatus.HasSend:
-                return 'Vriendverzoek in aanvraag';
-            case FriendRequestStatus.HasReceived:
-                return 'Accepteer vriendverzoek';
-            case FriendRequestStatus.AreFriends:
-                return 'Verwijder als vriend';
-            default:
-                return 'Toevoegen';
-        }
+    onLookupUser(user: IUserFlat): void {
+        alert('Deze functionaliteit werkt nog niet :(');
     }
 
     onUserAdd(user: IUserFlat): void {
-        const profile: IProfile = {
-            Id: user.Id,
-            IsLazy: false,
-            Length: null,
-            Location: null,
-            User: null,
-            LocationId: null,
-            UserId: null,
-            Weigth: null
-        };
-
-        this.appService.addFriend(profile).subscribe(
+        this.appService.addFriend(user.Id).subscribe(
             (resp) => {
                 this.notificationService.success('Gebruiker toegevoegd!', `Gebruiker '${user.Username}' toegevoegd!`);
                 this.webSocketService.onAddFriend(user.Id);
+                if (user.HasRequestOpen === FriendRequestStatus.None) {
+                    user.HasRequestOpen = FriendRequestStatus.HasSend;
+                } else {
+                    user.HasRequestOpen = FriendRequestStatus.AreFriends;
+                }
             },
             (err) => {
                 if (err.status === 401) {
@@ -167,6 +104,22 @@ export class AppSearchPageComponent {
     }
 
     onRemoveUser(user: IUserFlat): void {
-        // Do some removing user :) !!
+        this.appService.removeFriend(user.Id).subscribe(
+            (resp) => {
+                if (user.HasRequestOpen === FriendRequestStatus.AreFriends) {
+                    this.notificationService.success('Gebruiker verwijderd!', `Gebruiker '${user.Username}' verwijderd!`);
+                } else {
+                    this.notificationService.success('Uitnodiging gewijgerd!', `Gebruiker '${user.Username}' gewijgerd!`);
+                }
+                user.HasRequestOpen = FriendRequestStatus.None;
+            },
+            (err) => {
+                if (err.status === 401) {
+                    this.authenticationService.logout('/profile');
+                } else {
+                    this.notificationService.error('Er is iets mis gegaan', `${err.error.Message}`);
+                }
+            }
+        );
     }
 }
