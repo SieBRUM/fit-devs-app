@@ -9,7 +9,7 @@ import { SnackBarModule, SnackBarService, TemplateType } from 'ng7-snack-bar';
 import { StoreModule } from '@ngrx/store';
 import { MatDialogModule, MatDialogContainer } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatFormFieldModule, MatSnackBarModule, MatIconModule, MatSortModule, MatChipsModule } from '@angular/material';
+import { MatFormFieldModule, MatSnackBarModule, MatIconModule, MatSortModule, MatChipsModule, MatCardModule, MatInputModule, MatGridListModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 
@@ -50,13 +50,18 @@ import { WebsocketService } from './websocket.service';
     AngularFontAwesomeModule,
     FormsModule,
     MatDialogModule,
-    MatFormFieldModule,
     MatButtonModule,
     MatSnackBarModule,
     MatIconModule,
     MatBadgeModule,
     MatTableModule,
     MatChipsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatProgressSpinnerModule,
     AlertModule.forRoot(),
     SnackBarModule.forRoot({
       template: TemplateType.DARK,

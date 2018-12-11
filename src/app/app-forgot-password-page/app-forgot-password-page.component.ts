@@ -6,6 +6,7 @@ import { IProfile } from 'src/mapping/IProfile';
 import { IUser } from 'src/mapping/IUser';
 import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
 import { ICookieUser } from 'src/mapping/ICookieUser';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-forgot-password',
@@ -17,7 +18,6 @@ export class AppForgotPasswordPageComponent {
     isLoading = false;
 
     newUser: ICookieUser;
-    error = '';
     questions: Array<IRecoveryQuestion> = [];
     email: string = null;
     recoveryQuestionAnswer: string = null;
@@ -28,7 +28,8 @@ export class AppForgotPasswordPageComponent {
     constructor(
         private httpService: AppService,
         private router: Router,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private notificationService: MatSnackBar
     ) {
         this.isLoading = true;
         this.newUser = null;
@@ -40,7 +41,10 @@ export class AppForgotPasswordPageComponent {
                     this.isLoading = false;
                 },
                 (err) => {
-                    this.error = err.error.Message;
+                    this.notificationService.open(`${err.error.Message}`, null, {
+                        panelClass: 'error-snack',
+                        duration: 2500
+                    });
                     this.isLoading = false;
                 });
         }, 1000);
@@ -48,7 +52,6 @@ export class AppForgotPasswordPageComponent {
 
     onCancel(): void {
         this.isSuccess = false;
-        this.error = '';
         this.router.navigateByUrl('/login');
     }
 
@@ -57,14 +60,19 @@ export class AppForgotPasswordPageComponent {
     }
 
     onRequestRecover(): void {
-        this.error = '';
         if (!this.recoveryQuestionAnswer || !this.email || !this.password || !this.passwordRepeat || !this.selectedQuestion) {
-            this.error = 'Alle velden zijn verplicht!';
+            this.notificationService.open(`Alle velden zijn verplicht!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            });
             return;
         }
 
         if (this.passwordRepeat !== this.password) {
-            this.error = 'Wachtwoorden komen niet overeen!';
+            this.notificationService.open(`Wachtwoorden komen niet overeen`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            });
             return;
         }
 
@@ -91,9 +99,12 @@ export class AppForgotPasswordPageComponent {
                 (err) => {
                     this.isSuccess = false;
                     this.isLoading = false;
-                    this.error = err.error.Message;
+                    this.notificationService.open(`${err.error.Message}`, null, {
+                        panelClass: 'error-snack',
+                        duration: 2500
+                    });
                 });
-        }, 2000);
+        }, 1000);
     }
 
     onChangeDone(): void {

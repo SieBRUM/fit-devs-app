@@ -1,52 +1,37 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <alert [hidden]="!hasError(error)" type="danger">
-            <button type="button" class="close" aria-label="Close" (click)="onClearError()">
-              <span aria-hidden="true">&times;</span>
+<mat-grid-list cols="1" rowHeight="4:1">
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h5 class="text-center">Login</h5>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="text" placeholder="Gebruikersnaam" [(ngModel)]="username" (keydown.enter)="login()"
+              required autofocus [disabled]="loggingIn" name="loginUsername">
+            <button mat-button [disabled]="!username || loggingIn" matSuffix mat-icon-button aria-label="Clear"
+              tabindex="-1" (click)="username=''">
+              <mat-icon>close</mat-icon>
             </button>
-            {{error}}
-          </alert>
-          <h5 class="card-title text-center">Log in</h5>
-          <div class="form-label-group input-group">
-            <div class="input-group-prepend">
-              <div class="input-group-text" id="btnGroupAddon">
-                <fa name="user"></fa>
-              </div>
-            </div>
-            <input type="text" id="inputUsername" class="form-control rounded-input-with-label" placeholder="Gebruikersnaam"
-              [(ngModel)]="username" (keydown.enter)="login()" required autofocus [disabled]="loggingIn">
-          </div>
-
-          <div class="form-label-group input-group">
-            <div class="input-group-prepend">
-              <div class="input-group-text" id="btnGroupAddon">
-                <fa name="lock"></fa>
-              </div>
-            </div>
-            <input type="password" id="inputPassword" class="form-control rounded-input-with-label" placeholder="Wachtwoord"
-              (keydown.enter)="login()" [(ngModel)]="password" required [disabled]="loggingIn">
-          </div>
-          <div style="text-align: center;">
-            <div class="btn-group" role="group">
-              <button class="btn btn-big btn-lg btn-primary text-uppercase" (click)="login()" [hidden]="loggingIn">
-                Inloggen
-              </button>
-              <button class="btn btn-big btn-lg btn-success text-uppercase" (click)="onRegister()" [hidden]="loggingIn">
-                Registeren
-              </button>
-            </div>
-            <button class="btn btn-big btn-lg btn-primary text-uppercase" (click)="login()" [disabled]="loggingIn"
-              [hidden]="!loggingIn" style="width: 100%;">
-              <fa name="cog" animation="spin" size="lg"></fa>
-              Aan het inloggen...
+          </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="password" placeholder="Wachtwoord" [(ngModel)]="password" (keydown.enter)="login()"
+              required autofocus [disabled]="loggingIn" name="loginPassword">
+            <button mat-button [disabled]="!password || loggingIn" matSuffix mat-icon-button aria-label="Clear"
+              tabindex="-1" (click)="password=''">
+              <mat-icon>close</mat-icon>
             </button>
-            <p class="text-muted" [hidden]="loggingIn">Wachtwoord vergeten? <a routerLink="/recover">Klik hier</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-progress-spinner class="mat-spinner" mode="indeterminate" [diameter]="40" [hidden]="!loggingIn"></mat-progress-spinner>
+        <button mat-button class="mat-success" (click)="login()" [hidden]="loggingIn">Inloggen</button>
+        <button mat-button (click)="onRegister()" [hidden]="loggingIn">Registreren</button>
+        <small class="text-muted" [hidden]="loggingIn">Wachtwoord vergeten? <a routerLink="/recover">Klik hier</a></small>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

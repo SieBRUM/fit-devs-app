@@ -3,6 +3,7 @@ import { AppService } from './../app.service';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
 import { IUser } from 'src/mapping/IUser';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-login',
@@ -12,24 +13,26 @@ import { IUser } from 'src/mapping/IUser';
 export class AppLoginPageComponent {
     loggingIn = false;
     rememberUsername: string;
-    error = '';
-    username: string;
-    password: string;
+    username = '';
+    password = '';
 
     constructor(
         private authenticationService: AuthenticationService,
         private httpService: AppService,
-        private router: Router
+        private router: Router,
+        private notificationService: MatSnackBar
     ) { }
 
     login() {
         if (!this.username || !this.password) {
-            this.error = 'Gebruikersnaam en wachtwoord moeten ingevuld zijn.';
+            this.notificationService.open(`Gebruikersnaam en wachtwoord moeten ingevuld zijn.`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            });
             return;
         }
 
         this.loggingIn = true;
-        this.error = '';
 
         const user: IUser = {
             Username: this.username,
@@ -50,7 +53,10 @@ export class AppLoginPageComponent {
                     this.loggingIn = false;
                 },
                 (err) => {
-                    this.error = err.error.Message;
+                    this.notificationService.open(`${err.error.Message}`, null, {
+                        panelClass: 'error-snack',
+                        duration: 2500
+                    });
                     this.loggingIn = false;
                 });
         }, 1000);
@@ -62,10 +68,6 @@ export class AppLoginPageComponent {
 
     onPasswordChange(password: string): void {
         this.password = password;
-    }
-
-    onClearError(): void {
-        this.error = '';
     }
 
     hasError(error: string): boolean {
