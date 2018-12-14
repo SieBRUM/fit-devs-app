@@ -29,6 +29,7 @@ import { AppHomePageComponent } from './app-home-page/app-home-page.component';
 import { AppProfilePageComponent } from './app-profile-page/app-profile-page.component';
 import { AppSearchPageComponent } from './app-search-page/app-search-page.component';
 import { WebsocketService } from './websocket.service';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 
@@ -62,6 +63,7 @@ import { WebsocketService } from './websocket.service';
     MatSelectModule,
     MatGridListModule,
     MatProgressSpinnerModule,
+    MatStepperModule,
     AlertModule.forRoot(),
     SnackBarModule.forRoot({
       template: TemplateType.DARK,

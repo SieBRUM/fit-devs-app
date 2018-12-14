@@ -77,4 +77,8 @@ export class AppLoginPageComponent {
     onRegister(): void {
         this.router.navigateByUrl('/register');
     }
+
+    onToProfile(): void {
+        this.router.navigateByUrl('/profile');
+    }
 }

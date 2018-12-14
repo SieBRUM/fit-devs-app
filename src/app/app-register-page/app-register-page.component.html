@@ -1,148 +1,129 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-      <div class="card card-signin my-5">
-        <div class="card-body">
-          <alert [hidden]="!hasError(error)" type="danger">
-            <button type="button" class="close" aria-label="Close" (click)="onClearError()">
-              <span aria-hidden="true">&times;</span>
+<mat-card class="card-half-size align-center-hor">
+  <mat-card-content>
+    <mat-horizontal-stepper #stepper [linear]="true" [selectedIndex]="step">
+      <mat-step>
+        <form>
+          <mat-form-field class="mat-full-width">
+            <ng-template matStepLabel>Account gegevens</ng-template>
+            <input matInput type="text" placeholder="Gebruikersnaam" [(ngModel)]="username" required autofocus
+              [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading" name="loginUsername">
+            <button mat-button [disabled]="!username || (!isLoadingQuestions(isLoading, questions) && isLoading)"
+              matSuffix mat-icon-button aria-label="Clear" tabindex="-1" (click)="username=''">
+              <mat-icon>close</mat-icon>
             </button>
-            {{error}}
-          </alert>
-          <h5 class="card-title text-center">Registreer (stap {{step}} / 2)</h5>
-          <!-- START step 1 of registration -->
-          <div *ngIf="checkIfStep(1)">
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="user"></fa>
-                </div>
-              </div>
-              <input type="text" id="inputUsername" class="form-control rounded-input-with-label" placeholder="Gebruikersnaam"
-                [(ngModel)]="username" required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
-            </div>
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="lock"></fa>
-                </div>
-              </div>
-              <input type="password" id="inputPassword" class="form-control rounded-input-with-label" placeholder="Wachtwoord"
-                [(ngModel)]="password" required [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
-            </div>
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="lock"></fa>
-                </div>
-              </div>
-              <input type="password" id="inputPasswordRepeat" class="form-control rounded-input-with-label" placeholder="Wachtwoord (herhalen)"
-                [(ngModel)]="passwordRepeat" required [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
-            </div>
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="tag"></fa>
-                </div>
-              </div>
-              <input type="text" id="inputName" class="form-control rounded-input-with-label" placeholder="Naam"
-                required [(ngModel)]="name" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
-            </div>
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="envelope"></fa>
-                </div>
-              </div>
-              <input type="email" id="inputEmail" class="form-control rounded-input-with-label" placeholder="Email adres"
-                required [(ngModel)]="email" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
-            </div>
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="calendar"></fa>
-                </div>
-              </div>
-              <input type="date" id="inputDate" class="form-control rounded-input-with-label" placeholder="Geboortedatum"
-                required [(ngModel)]="date" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
-            </div>
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="question"></fa>
-                </div>
-              </div>
-              <select id="selectQuestion" class="form-control rounded-input-with-label" placeholder="Beveiligingsvraag"
-                [(ngModel)]="selectedQuestion" [disabled]="isLoading">
-                <option [ngValue]="null" disabled hidden>Kies een beveiligingsvraag...</option>
-                <option *ngFor="let question of questions" [ngValue]="question.Id">
-                  {{question.RecoveryQuestion}}
-                </option>
-              </select>
-            </div>
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="check"></fa>
-                </div>
-              </div>
-              <input type="input" id="inputQuestion" class="form-control rounded-input-with-label" placeholder="Beveiligingsantwoord"
-                [(ngModel)]="recoveryQuestionAnswer" required [disabled]="isLoading" (keydown.enter)="onRegisterUser()">
-            </div>
-            <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegisterUser()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
-              <div *ngIf="!isLoading || (isLoading && isLoadingQuestions(isLoading, questions))">
-                Volgende
-                <fa name="arrow-right"></fa>
-              </div>
-              <div *ngIf="!isLoadingQuestions(isLoading, questions) && isLoading">
-                <fa name="cog" size="2x" animation="spin"></fa>
-              </div>
+          </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="password" placeholder="Wachtwoord" [(ngModel)]="password" required autofocus
+              [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading" name="loginPassword">
+            <button mat-button [disabled]="!password || (!isLoadingQuestions(isLoading, questions) && isLoading)"
+              matSuffix mat-icon-button aria-label="Clear" tabindex="-1" (click)="password=''">
+              <mat-icon>close</mat-icon>
             </button>
-            <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()" [hidden]="isLoading"
-              [hidden]="!isLoadingQuestions(isLoading, questions) && isLoading">
+          </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="password" placeholder="Wachtwoord (herhalen)" [(ngModel)]="passwordRepeat" required
+              autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading" name="loginPassword">
+            <button mat-button [disabled]="!passwordRepeat || (!isLoadingQuestions(isLoading, questions) && isLoading)"
+              matSuffix mat-icon-button aria-label="Clear" tabindex="-1" (click)="passwordRepeat=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="text" placeholder="Naam" [(ngModel)]="name" required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading"
+              name="loginName">
+            <button mat-button [disabled]="!name || (!isLoadingQuestions(isLoading, questions) && isLoading)" matSuffix
+              mat-icon-button aria-label="Clear" tabindex="-1" (click)="name=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="text" placeholder="Email" [(ngModel)]="email" required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading"
+              name="loginEmail">
+            <button mat-button [disabled]="!email || (!isLoadingQuestions(isLoading, questions) && isLoading)"
+              matSuffix mat-icon-button aria-label="Clear" tabindex="-1" (click)="email=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="date" placeholder="Geboortedatum" [(ngModel)]="date" required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading"
+              name="loginDate">
+            <button mat-button [disabled]="!date || (!isLoadingQuestions(isLoading, questions) && isLoading)" matSuffix
+              mat-icon-button aria-label="Clear" tabindex="-1" (click)="date=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <mat-select placeholder="Beveiligingsvraag" [(ngModel)]="selectedQuestion" [disabled]="isLoading" name="loginRecoveryQuestion">
+              <mat-option value="null" disabled hidden>Kies een beveiligingsvraag...</mat-option>
+              <mat-option *ngFor="let question of questions" [value]="question.Id">
+                {{question.RecoveryQuestion}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="text" placeholder="Beveiligingsantwoord" [(ngModel)]="recoveryQuestionAnswer"
+              required autofocus [disabled]="isLoading" name="loginRecoveryAnswer">
+            <button mat-button [disabled]="!recoveryQuestionAnswer || (!isLoadingQuestions(isLoading, questions) && isLoading)"
+              matSuffix mat-icon-button aria-label="Clear" tabindex="-1" (click)="recoveryQuestionAnswer=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <div>
+            <button mat-button class="mat-danger" (click)="onCancel()" [hidden]="!isLoadingQuestions(isLoading, questions) && isLoading">
               Annuleren
               <fa name="times"></fa>
             </button>
+            <button mat-button class="mat-success pull-right" (click)="onRegisterUser()" *ngIf="!isLoading || (isLoading && isLoadingQuestions(isLoading, questions))">
+              Volgende
+              <fa name="arrow-right"></fa>
+            </button>
+            <div class="text-center" *ngIf="!isLoadingQuestions(isLoading, questions) && isLoading">
+              <fa name="cog" size="4x" animation="spin"></fa>
+            </div>
           </div>
-          <!-- END step 1 of registration -->
+        </form>
+      </mat-step>
+      <mat-step [editable]="isDoneWithFirst">
+        <ng-template matStepLabel>Persoonlijke gegevens</ng-template>
+        <form>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="text" placeholder="Lengte" [(ngModel)]="length" required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading"
+              name="loginLength">
+            <button mat-button [disabled]="!length || !isLoadingQuestions(isLoading, questions) && isLoading" matSuffix
+              mat-icon-button aria-label="Clear" tabindex="-1" (click)="length=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <input matInput type="text" placeholder="weigth" [(ngModel)]="weigth" required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading"
+              name="loginWeight">
+            <button mat-button [disabled]="!weigth || !isLoadingQuestions(isLoading, questions) && isLoading" matSuffix
+              mat-icon-button aria-label="Clear" tabindex="-1" (click)="weigth=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <button mat-button class="mat-danger" (click)="onCancel()" [hidden]="!isLoadingQuestions(isLoading, questions) && isLoading">
+            Annuleren
+            <fa name="times"></fa>
+          </button>
+          <button mat-button class="mat-success pull-right" (click)="onRegisterProfile()" *ngIf="!isLoading || (isLoading && isLoadingQuestions(isLoading, questions))">
+            Volgende
+            <fa name="arrow-right"></fa>
+          </button>
+          <div class="text-center" *ngIf="!isLoadingQuestions(isLoading, questions) && isLoading">
+            <fa name="cog" size="4x" animation="spin"></fa>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Klaar!</ng-template>
+        Account aangemaakt!
+        <button mat-button class="mat-success pull-right" (click)="onToProfile()">
+          Naar profiel
+          <fa name="arrow-right"></fa>
+        </button>
+      </mat-step>
+    </mat-horizontal-stepper>
 
-          <!-- START step 2 of registration -->
-          <div *ngIf="checkIfStep(2)">
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="user-md"></fa>
-                </div>
-              </div>
-              <input type="number" id="inputLength" class="form-control rounded-input-with-label" placeholder="Lengte"
-                required [(ngModel)]="length" (keydown.enter)="onRegisterProfile()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
-            </div>
-            <div class="form-label-group input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text" id="btnGroupAddon">
-                  <fa name="balance-scale"></fa>
-                </div>
-              </div>
-              <input type="number" id="inputWeigth" class="form-control rounded-input-with-label" placeholder="Gewicht (in kg)"
-                required [(ngModel)]="weigth" (keydown.enter)="onRegisterProfile()" [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading">
-            </div>
-            <button class="btn btn-lg btn-success btn-block text-uppercase" (click)="onRegisterProfile()">
-              <div *ngIf="!isLoading || (isLoading && isLoadingQuestions(isLoading, questions))">
-                Registreer
-                <fa name="check"></fa>
-              </div>
-              <div *ngIf="!isLoadingQuestions(isLoading, questions) && isLoading">
-                <fa name="cog" size="2x" animation="spin"></fa>
-              </div>
-            </button>
-            <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()" [hidden]="!isLoadingQuestions(isLoading, questions) && isLoading">
-              Annuleren
-              <fa name="times"></fa>
-            </button>
-          </div>
-          <!-- START step 2 of registration -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>

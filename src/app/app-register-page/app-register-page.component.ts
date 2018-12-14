@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AppService } from './../app.service';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
 import { IProfile } from 'src/mapping/IProfile';
 import { IUser } from 'src/mapping/IUser';
 import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { MatStepper } from '@angular/material';
 
 @Component({
     selector: 'app-register',
@@ -12,9 +15,11 @@ import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
     styleUrls: ['./app-register-page.component.sass']
 })
 export class AppRegisterPageComponent {
-    step = 1;
-    error = '';
+    @ViewChild('stepper') private stepper: MatStepper;
+
+    step = 0;
     isLoading = false;
+    isDoneWithFirst = false;
     questions: Array<IRecoveryQuestion> = [];
 
     username: string;
@@ -31,7 +36,8 @@ export class AppRegisterPageComponent {
     constructor(
         private authenticationService: AuthenticationService,
         private httpService: AppService,
-        private router: Router
+        private router: Router,
+        private notificationService: MatSnackBar
     ) {
         this.isLoading = true;
         setTimeout(() => {
@@ -41,23 +47,32 @@ export class AppRegisterPageComponent {
                     this.isLoading = false;
                 },
                 (err) => {
-                    this.error = err.error.Message;
+                    this.notificationService.open(`${err.error.Message}`, null, {
+                        panelClass: 'error-snack',
+                        duration: 2500
+                    });
                     this.isLoading = false;
                 });
         }, 1000);
     }
 
     onRegisterUser(): void {
-        this.error = '';
+        this.isDoneWithFirst = false;
         if (!this.username || !this.password || !this.passwordRepeat
             || !this.name || !this.email || !this.date
             || !this.selectedQuestion || !this.recoveryQuestionAnswer) {
-            this.error = 'Alle velden zijn verplicht!';
+            this.notificationService.open(`Alle velden zijn verplicht!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            });
             return;
         }
 
         if (this.password !== this.passwordRepeat) {
-            this.error = 'Wachtwoorden komen niet overeen!';
+            this.notificationService.open(`Wachtwoorden komen niet overeen!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            });
             return;
         }
 
@@ -70,11 +85,15 @@ export class AppRegisterPageComponent {
         setTimeout(() => {
             this.httpService.checkAvailability(userData).subscribe(
                 (resp) => {
-                    this.step = 2;
+                    this.isDoneWithFirst = true;
                     this.isLoading = false;
+                    this.stepper.selectedIndex = 1;
                 },
                 (err) => {
-                    this.error = err.error.Message;
+                    this.notificationService.open(`${err.error.Message}`, null, {
+                        panelClass: 'error-snack',
+                        duration: 2500
+                    });
                     this.isLoading = false;
                 });
         }, 1000);
@@ -82,7 +101,10 @@ export class AppRegisterPageComponent {
 
     onRegisterProfile(): void {
         if (!this.length || !this.weigth) {
-            this.error = 'Alle velden zijn verplicht!';
+            this.notificationService.open(`Alle velden zijn verplicht!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            });
             return;
         }
 
@@ -120,22 +142,16 @@ export class AppRegisterPageComponent {
                     this.isLoading = false;
                 },
                 (err) => {
-                    this.error = err.error.Message;
-                    this.isLoading = false;
+                    this.notificationService.open(`${err.error.Message}`, null, {
+                        panelClass: 'error-snack',
+                        duration: 2500
+                    }); this.isLoading = false;
                 });
         }, 1000);
     }
 
     onCancel(): void {
         this.router.navigateByUrl('/login');
-    }
-
-    onClearError(): void {
-        this.error = '';
-    }
-
-    hasError(error): boolean {
-        return error ? true : false;
     }
 
     checkIfStep(step: number): boolean {
