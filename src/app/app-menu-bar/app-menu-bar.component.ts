@@ -38,6 +38,7 @@ export class AppMenuBarComponent {
     }
 
     navigate(route: string): void {
+        console.log(route);
         this.router.navigateByUrl(route);
     }
 
@@ -47,6 +48,10 @@ export class AppMenuBarComponent {
         } else {
             return 'btn my-2 my-sm-0 menu-bar-item';
         }
+    }
+
+    isActive(route: string): boolean {
+        return this.router.url === route;
     }
 
     onSearchUsername(): void {

@@ -1,4 +1,52 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<mat-toolbar role="heading" color="primary">
+  <mat-toolbar-row>
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link class="mat-tab-a" routerLink="/home" [active]="isActive('/home')">
+        Home
+      </a>
+      <a mat-tab-link class="mat-tab-a" routerLink="/profile" [active]="isActive('/profile')">
+        Mijn profiel
+      </a>
+      <a mat-tab-link class="mat-tab-a" routerLink="/friends" [active]="isActive('/friends')">
+        Mijn vrienden
+      </a>
+      <a mat-tab-link class="mat-tab-a" routerLink="/exercises" [active]="isActive('/exercises')">
+        Oefeningen
+      </a>
+    </nav>
+    <!-- Make sure to fill page, to align things on right side -->
+    <span class="fill-space"></span>
+
+    <mat-form-field *ngIf="authenticationService.isLoggedIn()" class="search-input" appearance="outline">
+      <mat-label>Zoeken</mat-label>
+      <input matInput type="text" [(ngModel)]="searchUsername" (keydown.enter)="onSearchUsername()" name="searchBarInput">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onSearchUsername()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-mini-fab color="primary">
+      <mat-icon matBadge="{{appService.notifications.length}}" matBadgeColor="warn">notifications</mat-icon>
+    </button>
+
+    <div *ngIf="authenticationService.isLoggedIn()" style="padding-left: 10px;">
+      <button mat-button class="mat-danger" (click)="logout()">
+        {{getUsername()}} &nbsp;
+        <mat-icon>power_settings_new</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="!authenticationService.isLoggedIn()" style="padding-left: 10px;">
+      <button mat-button class="mat-success" (click)="login()">
+        Inloggen &nbsp;
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" routerLink="/home">Fit devs</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,23 +65,6 @@
       </div>
     </ul>
 
-    <form class="form-inline mr-3" *ngIf="authenticationService.isLoggedIn()">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Zoek gebruikersnaam" aria-label="Zoek gebruikersnaam"
-          aria-describedby="button-addon2" [(ngModel)]="searchUsername" (keydown.enter)="onSearchUsername()" name="searchBarInput">
-        <div class="input-group-append">
-          <button class="btn btn-outline-success" type="button" id="button-addon2" (click)="onSearchUsername()">
-            <fa name="search"></fa>
-          </button>
-        </div>
-      </div>
-    </form>
-
-    <form class="form-inline mr-3" *ngIf="appService.notifications.length !== 0">
-      <button mat-mini-fab color="primary">
-        <mat-icon matBadge="{{appService.notifications.length}}" matBadgeColor="warn">notifications</mat-icon>
-      </button>
-    </form>
 
     <div *ngIf="authenticationService.isLoggedIn()">
       <button class="btn btn-outline-danger my-2 my-sm-0" (click)="logout()">{{getUsername()}}
@@ -46,4 +77,4 @@
       </button>
     </div>
   </div>
-</nav>
+</nav> -->

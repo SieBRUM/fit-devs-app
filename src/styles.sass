@@ -1,20 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css'
+@import '~@angular/material/prebuilt-themes/indigo-pink.css'
 
 .friend-request-snack
-    color: #ffffff
-    background-color: #008222
+    color: var(--white)
+    background-color: var(--success)
 .error-snack
-   background-color: #ff0505
-   color: #ffffff 
+   background-color: var(--danger) 
+   color: var(--white)
 .mat-success
-    background-color: #28a745 !important
-    color: #ffffff !important
+    background-color: var(--success) !important
+    color: var(--white) !important
     &:disabled
         opacity: .65
 .mat-danger
     background-color: #dc3545 !important
-    color: #ffffff !important
+    color: var(--white) !important
     &:disabled
         opacity: .65
 .mat-small-button
