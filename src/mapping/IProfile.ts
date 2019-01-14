@@ -1,5 +1,5 @@
-import { IUser } from './IUser'
-import { ILocation } from './ILocation'
+import { IUser } from './IUser';
+import { ILocation } from './ILocation';
 import { IAchievementStatus } from './IAchievementStatus';
 
 export interface IProfile {

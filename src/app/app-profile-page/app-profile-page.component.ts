@@ -21,6 +21,7 @@ export class AppProfilePageComponent {
     completedAchievements: Array<IAchievementStatus> = [];
     questions: Array<IRecoveryQuestion> = [];
     profileSideOpened = true;
+    currentTab = 'achievements';
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -106,5 +107,9 @@ export class AppProfilePageComponent {
         };
 
         return newProfile;
+    }
+
+    openTab(tabName: string): void {
+        this.currentTab = tabName;
     }
 }

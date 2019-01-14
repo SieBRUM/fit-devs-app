@@ -1,0 +1,27 @@
+<mat-grid-list cols="2">
+  <mat-grid-tile>
+    <div style="width: 100%;height: 90%">
+      <h2>Deze achievement heb je bijna behaald.</h2>
+      <div *ngFor="let a of incompletedAchievements">
+        {{a.Achievement.Name}}: {{a.Achievement.Description}} {{getPercentage(a)}}% ({{a.CurrentPoints}} /
+        {{a.Achievement.RequiredPoints}})
+        <mat-progress-bar mode="determinate" value="{{getPercentage(a)}}" style="height:20px; width: 600px"></mat-progress-bar>
+      </div>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div style="width: 100%;height: 90% ;">
+      <h2 style="display: inline-block;">Behaalde achievement!</h2>
+      <mat-grid-list cols="4" rowHeight="125px">
+        <div *ngFor="let a of completedAchievements">
+          <mat-grid-tile *ngIf="!shouldShowAchievement(a)">
+            <div>
+              <img style="width:75px;height:75px;" matTooltip="{{a.Achievement.Description}}" matListAvatar src="../../assets/images/{{getPlaatje(a)}}.png"
+                class="achievement-badge-avatar">
+            </div>
+          </mat-grid-tile>
+        </div>
+      </mat-grid-list>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

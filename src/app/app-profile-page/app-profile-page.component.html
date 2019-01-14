@@ -43,23 +43,22 @@
 
     <!-- START Main content-->
     <div style="height:92vh;">
-      <!-- <h2 style="display: inline-block">Behaalde achievement!</h2>
-      <ul>
-        <li *ngFor="let a of completedAchievements">
-          {{a.Achievement.Name}}
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" (click)="openTab('achievements')">Achievements</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="openTab('vrienden')">Vrienden</a>
         </li>
       </ul>
+      <div *ngIf="currentTab=='achievements'">
+        <app-achievement [profile]="profile" [incompletedAchievements]="incompletedAchievements"
+          [completedAchievements]="completedAchievements"></app-achievement>
+      </div>
 
-      <h2>Zo dichtbij!</h2>
-      <div *ngFor="let a of incompletedAchievements">
-        {{a.Achievement.Name}}
-        <div class="progress" style="width: 40%">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [ngStyle]="{'width': getPercentage(a)+'%'}"
-            attr.aria-valuenow="{{getPercentage(a)}}" aria-valuemin="0" aria-valuemax="100">
-            <span> <b>{{getPercentage(a)}}% ({{a.CurrentPoints}} / {{a.Achievement.RequiredPoints}})</b></span>
-          </div>
-        </div>
-      </div> -->
+      <div *ngIf="currentTab=='vrienden'">
+        <app-friends [friends]="profile.Friends"></app-friends>
+      </div>
     </div>
     <!-- END Main content-->
   </mat-sidenav-container>

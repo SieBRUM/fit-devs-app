@@ -1,0 +1,41 @@
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel *ngFor="let friend of _friends" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{friend.Name}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Show Profile And Achievements
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <table style="width:40%">
+      <tr>
+        <th><strong>Naam</strong></th>
+        <td>{{friend.Name}}</td>
+      </tr>
+      <tr>
+        <td><strong>Geboortedatum</strong></td>
+        <td>{{toReadableDate(friend.DateOfBirth)}}</td>
+      </tr>
+      <tr>
+        <td><strong>Lui?</strong></td>
+        <td>{{friend.IsLazy}}</td>
+      </tr>
+    </table>
+
+    <p></p>
+    <mat-divider></mat-divider>
+    <p></p>
+
+    <div *ngFor="let achievement of friend.CompletedAchievements">
+      <p> {{achievement.Achievement.Name}} </p>
+    </div>
+
+    <mat-action-row>
+      <button mat-raised-button (click)="onRemoveUser(friend)" color="danger"> Verwijder Vriend </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+</mat-accordion>

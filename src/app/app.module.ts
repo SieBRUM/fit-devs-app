@@ -13,7 +13,7 @@ import {
   MatFormFieldModule, MatSnackBarModule, MatIconModule,
   MatSidenavModule, MatChipsModule, MatCardModule,
   MatInputModule, MatGridListModule, MatProgressSpinnerModule,
-  MatSelectModule, MatTabsModule, MatToolbarModule, MatListModule, MatNativeDateModule, MatDatepickerModule
+  MatSelectModule, MatTabsModule, MatToolbarModule, MatListModule, MatNativeDateModule, MatDatepickerModule, MatExpansionModule, MatProgressBarModule, MatTooltipModule
 } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -36,6 +36,8 @@ import { AppSearchPageComponent } from './app-search-page/app-search-page.compon
 import { WebsocketService } from './websocket.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AppEditProfileDialogComponent } from './app-edit-profile-dialog/app-edit-profile-dialog.component';
+import { AppFriendsPageComponent } from './app-friends-page/app-friends-page.component';
+import { AppAchievementPageComponent } from './app-achievement-page/app-achievement-page.component';
 
 
 
@@ -49,7 +51,9 @@ import { AppEditProfileDialogComponent } from './app-edit-profile-dialog/app-edi
     AppHomePageComponent,
     AppProfilePageComponent,
     AppSearchPageComponent,
-    AppEditProfileDialogComponent
+    AppEditProfileDialogComponent,
+    AppFriendsPageComponent,
+    AppAchievementPageComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +71,9 @@ import { AppEditProfileDialogComponent } from './app-edit-profile-dialog/app-edi
     MatCardModule,
     MatFormFieldModule,
     MatSidenavModule,
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatTooltipModule,
     MatInputModule,
     MatSelectModule,
     MatNativeDateModule,
