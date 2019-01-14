@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { AppService } from '../app.service';
 import { IProfile } from 'src/mapping/IProfile';
-import { SnackBarService } from 'ng7-snack-bar';
 import { IAchievementStatus } from 'src/mapping/IAchievementStatus';
 import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { AppEditProfileDialogComponent } from '../app-edit-profile-dialog/app-edit-profile-dialog.component';
 
 @Component({
@@ -26,7 +25,7 @@ export class AppProfilePageComponent {
     constructor(
         private authenticationService: AuthenticationService,
         private appService: AppService,
-        private notificationService: SnackBarService,
+        private notificationService: MatSnackBar,
         private dialog: MatDialog
     ) {
         this.isLoading = true;
@@ -48,7 +47,10 @@ export class AppProfilePageComponent {
                     if (err.status === 401) {
                         this.authenticationService.logout('/profile');
                     } else {
-                        this.notificationService.error('Er is iets mis gegaan', `${err.error.Message}`);
+                        this.notificationService.open(`Er is iets mis gegaan! ${err.error.Message}`, null, {
+                            panelClass: 'error-snack',
+                            duration: 2500
+                        });
                     }
                     this.isLoading = false;
                 });

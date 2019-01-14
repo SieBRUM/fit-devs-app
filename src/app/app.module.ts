@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 // External
 import { AlertModule } from 'ngx-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { SnackBarModule, SnackBarService, TemplateType } from 'ng7-snack-bar';
+import { SnackBarModule, TemplateType } from 'ng7-snack-bar';
 import { StoreModule } from '@ngrx/store';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -102,7 +102,6 @@ import { AppAchievementPageComponent } from './app-achievement-page/app-achievem
     AppService,
     AuthenticationService,
     WebsocketService,
-    SnackBarService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,

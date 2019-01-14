@@ -3,10 +3,8 @@ import { AuthenticationService } from '../authentication.service';
 import { AppService } from '../app.service';
 import { ActivatedRoute } from '@angular/router';
 import { IUserFlat, FriendRequestStatus } from 'src/mapping/IUserFlat';
-import { IUser } from 'src/mapping/IUser';
-import { SnackBarService } from 'ng7-snack-bar';
-import { IProfile } from 'src/mapping/IProfile';
 import { WebsocketService } from '../websocket.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-search',
@@ -24,7 +22,7 @@ export class AppSearchPageComponent {
         private authenticationService: AuthenticationService,
         private appService: AppService,
         private activatedRoute: ActivatedRoute,
-        private notificationService: SnackBarService,
+        private notificationService: MatSnackBar,
         private webSocketService: WebsocketService
     ) {
         this.activatedRoute.queryParams.subscribe(
@@ -55,7 +53,10 @@ export class AppSearchPageComponent {
                     if (err.status === 401) {
                         this.authenticationService.logout('/profile');
                     } else {
-                        this.notificationService.error('Er is iets mis gegaan', `${err.error.Message}`);
+                        this.notificationService.open(`Er is iets mis gegaan! ${err.error.Message}`, null, {
+                            panelClass: 'error-snack',
+                            duration: 2500
+                        });
                     }
                     this.isLoading = false;
                 }
@@ -85,7 +86,10 @@ export class AppSearchPageComponent {
     onUserAdd(user: IUserFlat): void {
         this.appService.addFriend(user.Id).subscribe(
             (resp) => {
-                this.notificationService.success('Gebruiker toegevoegd!', `Gebruiker '${user.Username}' toegevoegd!`);
+                this.notificationService.open(`Gebruiker '${user.Username}' toegevoegd!`, null, {
+                    panelClass: 'success-snack',
+                    duration: 2500
+                });
                 this.webSocketService.onAddFriend(user.Id);
                 if (user.HasRequestOpen === FriendRequestStatus.None) {
                     user.HasRequestOpen = FriendRequestStatus.HasSend;
@@ -97,7 +101,10 @@ export class AppSearchPageComponent {
                 if (err.status === 401) {
                     this.authenticationService.logout('/profile');
                 } else {
-                    this.notificationService.error('Er is iets mis gegaan', `${err.error.Message}`);
+                    this.notificationService.open(`Er is iets mis gegaan! ${err.error.Message}`, null, {
+                        panelClass: 'error-snack',
+                        duration: 2500
+                    });
                 }
             }
         );
@@ -107,9 +114,15 @@ export class AppSearchPageComponent {
         this.appService.removeFriend(user.Id).subscribe(
             (resp) => {
                 if (user.HasRequestOpen === FriendRequestStatus.AreFriends) {
-                    this.notificationService.success('Gebruiker verwijderd!', `Gebruiker '${user.Username}' verwijderd!`);
+                    this.notificationService.open(`Gebruiker '${user.Username}' verwijderd!`, null, {
+                        panelClass: 'success-snack',
+                        duration: 2500
+                    });
                 } else {
-                    this.notificationService.success('Uitnodiging gewijgerd!', `Gebruiker '${user.Username}' gewijgerd!`);
+                    this.notificationService.open(`Gebruiker '${user.Username}' gewijgerd!`, null, {
+                        panelClass: 'success-snack',
+                        duration: 2500
+                    });
                 }
                 user.HasRequestOpen = FriendRequestStatus.None;
             },
@@ -117,7 +130,10 @@ export class AppSearchPageComponent {
                 if (err.status === 401) {
                     this.authenticationService.logout('/profile');
                 } else {
-                    this.notificationService.error('Er is iets mis gegaan', `${err.error.Message}`);
+                    this.notificationService.open(`Er is iets mis gegaan! ${err.error.Message}`, null, {
+                        panelClass: 'error-snack',
+                        duration: 2500
+                    });
                 }
             }
         );

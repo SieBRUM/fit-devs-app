@@ -22,7 +22,6 @@ export class WebsocketService {
 
     configureWebsocket(): void {
         if (this.connection != null && this.connection !== undefined) {
-            console.log('Called configureWebsocket when its already configured.');
             return;
         }
 
@@ -33,8 +32,6 @@ export class WebsocketService {
 
         this.connection.start()
             .done(function () {
-                console.log('Now connected, connection ID=' + that.connection.id);
-                console.log(that.connection);
                 that.onSetNewCookie();
             })
             .fail(function () { console.log('Could not connect'); });

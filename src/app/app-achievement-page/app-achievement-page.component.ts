@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { AppService } from '../app.service';
 import { IProfile } from 'src/mapping/IProfile';
-import { SnackBarService } from 'ng7-snack-bar';
 import { IAchievementStatus } from 'src/mapping/IAchievementStatus';
 import { IAchievement } from 'src/mapping/IAchievement';
 

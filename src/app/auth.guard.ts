@@ -31,8 +31,6 @@ export class AuthGuard implements CanActivate {
                 return true;
             }
         }
-        console.log(`User did NOT get access to route ${url} because login status is ${this.authService.isLoggedIn()}`);
-
         if (url === '/login' || url === '/register' || url === '/recover') {
             this.router.navigateByUrl('/home');
             return false;

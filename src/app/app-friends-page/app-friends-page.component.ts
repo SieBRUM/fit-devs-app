@@ -2,12 +2,10 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { AppService } from '../app.service';
 import { IProfile } from 'src/mapping/IProfile';
-import { IFriend } from 'src/mapping/IFriend';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { FriendRequestStatus, IUserFlat } from 'src/mapping/IUserFlat';
 import { IAchievementStatus } from 'src/mapping/IAchievementStatus';
 import { element } from '@angular/core/src/render3';
-import { SnackBarService } from 'ng7-snack-bar';
 
 
 
@@ -28,10 +26,10 @@ export class AppFriendsPageComponent {
     private friendTableData: MatTableDataSource<IUserFlat>;
 
     constructor(
-        private notificationService: SnackBarService,
+        private notificationService: MatSnackBar,
         private appService: AppService,
         private authenticationService: AuthenticationService
-    ) {}
+    ) { }
 
 
     @Input()
@@ -48,18 +46,21 @@ export class AppFriendsPageComponent {
     }
 
     onRemoveUser(user: IUserFlat): void {
-        console.log(user);
         this.appService.removeFriend(user.Id).subscribe(
             (resp) => {
-
-                this.notificationService.success('Vriend verwijderd!', `Vriend '${user.Username}' verwijderd!`);
-
+                this.notificationService.open(`Vriend '${user.Username}' verwijderd!`, null, {
+                    panelClass: 'success-snack',
+                    duration: 2500
+                });
             },
             (err) => {
                 if (err.status === 401) {
                     this.authenticationService.logout('/profile');
                 } else {
-                    this.notificationService.error('Er is iets mis gegaan', `${err.error.Message}`);
+                    this.notificationService.open(`Er is iets mis gegaan! ${err.error.Message}`, null, {
+                        panelClass: 'error-snack',
+                        duration: 2500
+                    });
                 }
             }
         );

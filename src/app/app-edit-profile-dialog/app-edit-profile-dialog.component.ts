@@ -1,9 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDatepickerInputEvent } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDatepickerInputEvent, MatSnackBar } from '@angular/material';
 import { IProfile } from 'src/mapping/IProfile';
 import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
 import { AppService } from '../app.service';
-import { SnackBarService } from 'ng7-snack-bar';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
@@ -23,7 +22,7 @@ export class AppEditProfileDialogComponent {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private appService: AppService,
-        private notificationService: SnackBarService,
+        private notificationService: MatSnackBar,
         private authenticationService: AuthenticationService,
         public dialogRef: MatDialogRef<AppEditProfileDialogComponent>,
     ) {
@@ -39,28 +38,41 @@ export class AppEditProfileDialogComponent {
     onSaveUser(): void {
         this.isLoading = true;
         if (this.newPassword !== this.newPasswordRepeat) {
-            this.notificationService.error('Wachtwoorden komen niet overeen!', null);
+            this.notificationService.open(`Wachtwoorden komen niet overeen!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            });
             return;
         }
         if (!this.profile.User.Name) {
-            this.notificationService.error('Naam is niet ingevuld!', null);
-            return;
+            this.notificationService.open(`Naam komen niet overeen!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            }); return;
         }
         if (!this.profile.User.Username) {
-            this.notificationService.error('Gebruikersnaam is niet ingevuld!', null);
-            return;
+            this.notificationService.open(`Gebruikersnaam komen niet overeen!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            }); return;
         }
         if (!this.profile.User.DateOfBirth) {
-            this.notificationService.error('Geboortedatum is niet ingevuld!', null);
-            return;
+            this.notificationService.open(`Geboortedatum komen niet overeen!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            }); return;
         }
         if (!this.profile.Weigth) {
-            this.notificationService.error('Gewicht is niet ingevuld!', null);
-            return;
+            this.notificationService.open(`Gewicht komen niet overeen!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            }); return;
         }
         if (!this.profile.Length) {
-            this.notificationService.error('Lengte is niet ingevuld!', null);
-            return;
+            this.notificationService.open(`Lengte komen niet overeen!`, null, {
+                panelClass: 'error-snack',
+                duration: 2500
+            }); return;
         }
 
         if (this.profile.User.RecoveryAnswer === "") {
@@ -71,7 +83,10 @@ export class AppEditProfileDialogComponent {
             this.appService.editUser(this.profile).subscribe(
                 (resp) => {
                     this.isLoading = false;
-                    this.notificationService.success('Profiel succesvol opgeslagen!', null);
+                    this.notificationService.open(`Profiel succesvol opgeslagen!`, null, {
+                        panelClass: 'success-snack',
+                        duration: 2500
+                    });
                     this.profile = resp.body;
                     const cookie = this.authenticationService.getCurrentUserCookie();
                     cookie.Name = this.profile.User.Name;
@@ -83,7 +98,10 @@ export class AppEditProfileDialogComponent {
                     if (err.status === 401) {
                         this.authenticationService.logout('/profile');
                     } else {
-                        this.notificationService.error('Error met het opslaan van je profiel!', err.error.Message);
+                        this.notificationService.open(`Er is iets mis gegaan! ${err.error.Message}`, null, {
+                            panelClass: 'error-snack',
+                            duration: 2500
+                        });
                     }
                 }
             );

@@ -39,7 +39,6 @@ export class AppMenuBarComponent implements AfterViewInit {
     }
 
     navigate(route: string): void {
-        console.log(route);
         this.router.navigateByUrl(route);
     }
 
