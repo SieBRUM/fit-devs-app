@@ -87,6 +87,7 @@ export class AppService {
         return this.http.post<any>(`${this.API_URL}removefriend`, friendId, { observe: 'response' });
     }
 
+
     getPosition(): Coordinates {
         return this.location;
     }

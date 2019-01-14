@@ -7,9 +7,14 @@ import { AlertModule } from 'ngx-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { SnackBarModule, SnackBarService, TemplateType } from 'ng7-snack-bar';
 import { StoreModule } from '@ngrx/store';
-import { MatDialogModule, MatDialogContainer } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatFormFieldModule, MatSnackBarModule, MatIconModule, MatSortModule, MatChipsModule, MatCardModule, MatInputModule, MatGridListModule, MatProgressSpinnerModule, MatSelectModule, MatTabsModule, MatToolbar, MatToolbarModule } from '@angular/material';
+import {
+  MatFormFieldModule, MatSnackBarModule, MatIconModule,
+  MatSidenavModule, MatChipsModule, MatCardModule,
+  MatInputModule, MatGridListModule, MatProgressSpinnerModule,
+  MatSelectModule, MatTabsModule, MatToolbarModule, MatListModule, MatNativeDateModule, MatDatepickerModule
+} from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 
@@ -30,6 +35,7 @@ import { AppProfilePageComponent } from './app-profile-page/app-profile-page.com
 import { AppSearchPageComponent } from './app-search-page/app-search-page.component';
 import { WebsocketService } from './websocket.service';
 import { MatStepperModule } from '@angular/material/stepper';
+import { AppEditProfileDialogComponent } from './app-edit-profile-dialog/app-edit-profile-dialog.component';
 
 
 
@@ -42,7 +48,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     AppForgotPasswordPageComponent,
     AppHomePageComponent,
     AppProfilePageComponent,
-    AppSearchPageComponent
+    AppSearchPageComponent,
+    AppEditProfileDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,13 +66,17 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatChipsModule,
     MatCardModule,
     MatFormFieldModule,
+    MatSidenavModule,
     MatInputModule,
     MatSelectModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatGridListModule,
     MatProgressSpinnerModule,
     MatTabsModule,
     MatToolbarModule,
     MatStepperModule,
+    MatListModule,
     AlertModule.forRoot(),
     SnackBarModule.forRoot({
       template: TemplateType.DARK,
@@ -91,6 +102,7 @@ import { MatStepperModule } from '@angular/material/stepper';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AppEditProfileDialogComponent]
 })
 export class AppModule { }

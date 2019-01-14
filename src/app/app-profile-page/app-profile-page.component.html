@@ -3,142 +3,47 @@
   <h1>Profiel aan het ophalen...</h1>
 </div>
 
-<div *ngIf="profile && !isLoading">
+<div class="content" *ngIf="profile && !isLoading">
   <!-- START Profile bar left-->
-  <div class="content" *ngIf="profile && !isLoading">
-    <div class="c-row" style="height:92vh;">
-      <div class="left">
-        <h2 style="text-align: center;" [hidden]="isInEdit">{{profile.User.Name}}</h2>
+  <mat-sidenav-container>
+    <mat-sidenav #drawer mode="side" [opened]="profileSideOpened">
+      <mat-list>
+        <mat-list-item>
+          <h4 mat-line> {{profile.User.Name}}</h4>
+          <mat-icon mat-list-icon>person</mat-icon>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>cake</mat-icon>
+          <h4 mat-line> {{profile.User.DateOfBirth | date:'dd-MM-yyyy'}}</h4>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>alternate_email</mat-icon>
+          <h4 mat-line> {{profile.User.Email}}</h4>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>fitness_center</mat-icon>
+          <h4 mat-line> {{profile.Weigth}} kg</h4>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>straighten</mat-icon>
+          <h4 mat-line> {{profile.Length}} cm</h4>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>airline_seat_flat</mat-icon>
+          <h4 mat-line> {{profile.IsLazy ? 'Ja' : 'Nee'}}</h4>
+        </mat-list-item>
+      </mat-list>
 
-        <div class="form-label-group input-group" style="padding-right: 10px; padding-top: 10px;" title="Naam" [hidden]="!isInEdit">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="tag"></fa>
-            </div>
-          </div>
-          <input type="text" id="inputName" class="form-control rounded-input-with-label" [(ngModel)]="newName"
-            [disabled]="!isInEdit || isSavingChanges">
-        </div>
+      <button mat-raised-button class="mat-full-width" (click)="onEnableEdit()" [disabled]="isLoading">
+        <mat-icon>edit</mat-icon>
+        Wijzig profiel
+      </button>
+    </mat-sidenav>
+    <!-- END Profile bar left-->
 
-        <div class="form-label-group input-group" style="padding-right: 10px;" title="Gebruikersnaam">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="user"></fa>
-            </div>
-          </div>
-          <input type="text" id="inputUsername" class="form-control rounded-input-with-label" [(ngModel)]="newUsername"
-            [disabled]="!isInEdit || isSavingChanges">
-        </div>
-
-        <div class="form-label-group input-group" style="padding-right: 10px;" title="Wachtwoord" [hidden]="!isInEdit">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="lock"></fa>
-            </div>
-          </div>
-          <input type="text" id="isInEdit" class="form-control rounded-input-with-label" [(ngModel)]="newPassword"
-            [disabled]="!isInEdit || isSavingChanges" placeholder="Wachtwoord (ongewijzigd)">
-        </div>
-
-
-        <div class="form-label-group input-group" style="padding-right: 10px;" title="Geboortedatum">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="calendar"></fa>
-            </div>
-          </div>
-          <input type="date" id="inputDate" class="form-control rounded-input-with-label" placeholder="Geboortedatum"
-            [disabled]="!isInEdit || isSavingChanges" [ngModel]="newDate | date:'yyyy-MM-dd'">
-        </div>
-
-        <div class="form-label-group input-group" style="padding-right: 10px;" title="Email">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="envelope"></fa>
-            </div>
-          </div>
-          <input type="email" id="inputEmail" class="form-control rounded-input-with-label" placeholder="Email adres"
-            [(ngModel)]="newEmail" [disabled]="!isInEdit || isSavingChanges">
-        </div>
-
-        <div class="form-label-group input-group" style="padding-right: 10px;" title="Lengte (in cm)">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="user-md"></fa>
-            </div>
-          </div>
-          <input type="number" id="inputLength" class="form-control rounded-input-with-label" placeholder="Lengte"
-            [disabled]="!isInEdit || isSavingChanges" [(ngModel)]="newLength">
-        </div>
-
-        <div class="form-label-group input-group" style="padding-right: 10px;" title="Gewicht (in kg)">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="balance-scale"></fa>
-            </div>
-          </div>
-          <input type="number" id="inputWeigth" class="form-control rounded-input-with-label" placeholder="Gewicht (in kg)"
-            [disabled]="!isInEdit || isSavingChanges" [(ngModel)]="newWeigth">
-        </div>
-
-        <div class="form-label-group input-group" style="padding-right: 10px;" title="Lui?" [hidden]="isInEdit">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="bed"></fa>
-            </div>
-          </div>
-          <input type="text" id="inputIsLazy" class="form-control rounded-input-with-label" placeholder="Is lui?"
-            disabled [(ngModel)]="profile.IsLazy">
-        </div>
-
-        <div class="form-label-group input-group" *ngIf="isInEdit" style="padding-right: 10px;" title="Beveiligingsvraag">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="question"></fa>
-            </div>
-          </div>
-          <select id="selectQuestion" class="form-control rounded-input-with-label" placeholder="Beveiligingsvraag"
-            [(ngModel)]="newRecoveryQuestion" [disabled]="isLoadingQuestions || isSavingChanges">
-            <option [ngValue]="null" disabled hidden>Kies een beveiligingsvraag...</option>
-            <option *ngFor="let question of questions" [ngValue]="question.Id">
-              {{question.RecoveryQuestion}}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-label-group input-group" *ngIf="isInEdit" style="padding-right: 10px;" title="Beveiligingsantwoord">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="btnGroupAddon">
-              <fa name="check"></fa>
-            </div>
-          </div>
-          <input type="input" id="inputQuestion" class="form-control rounded-input-with-label" placeholder="Beveiligingsantwoord"
-            [(ngModel)]="newRecoveryAnswer" required [disabled]="isLoadingQuestions || isSavingChanges">
-        </div>
-
-        <button class="btn btn-block" *ngIf="canEdit && !isInEdit" (click)="onEnableEdit()">
-          <fa name="pencil"></fa>
-          Wijzig profiel
-        </button>
-        <button class="btn btn-block btn-success" *ngIf="canEdit && isInEdit" (click)="onSaveEdit()" [disabled]="isSavingChanges">
-          <div *ngIf="!isSavingChanges">
-            <fa name="save"></fa> Opslaan
-          </div>
-          <div *ngIf="isSavingChanges">
-            <fa name="cog" animation="spin" size="lg"></fa>
-            Opslaan...
-          </div>
-        </button>
-        <button class="btn btn-lg btn-danger btn-block text-uppercase" (click)="onCancel()" [hidden]="isSavingChanges || !isInEdit">
-          Annuleren
-          <fa name="times"></fa>
-        </button>
-      </div>
-    </div>
-    <!-- STOP Profile bar left-->
-
-    <div class="main-content">
-      <h2 style="display: inline-block">Behaalde achievement!</h2>
+    <!-- START Main content-->
+    <div style="height:92vh;">
+      <!-- <h2 style="display: inline-block">Behaalde achievement!</h2>
       <ul>
         <li *ngFor="let a of completedAchievements">
           {{a.Achievement.Name}}
@@ -154,9 +59,10 @@
             <span> <b>{{getPercentage(a)}}% ({{a.CurrentPoints}} / {{a.Achievement.RequiredPoints}})</b></span>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
-  </div>
+    <!-- END Main content-->
+  </mat-sidenav-container>
 </div>
 
 <div *ngIf="!profile && !isLoading" style="text-align:center;">

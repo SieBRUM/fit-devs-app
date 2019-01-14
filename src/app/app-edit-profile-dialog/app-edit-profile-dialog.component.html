@@ -1,0 +1,48 @@
+<h2 mat-dialog-title [hidden]="isLoading">Gebruiker wijzigen</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form [hidden]="isLoading">
+    <mat-form-field class="mat-full-width">
+      <input matInput type="text" placeholder="Gebruikersnaam" [(ngModel)]="profile.User.Username" required [disabled]="isLoading"
+        name="newUsername">
+    </mat-form-field>
+    <mat-form-field class="mat-full-width">
+      <input matInput type="text" placeholder="Naam" [(ngModel)]="profile.User.Name" [disabled]="isLoading" name="newName">
+    </mat-form-field>
+    <mat-form-field class="mat-full-width">
+      <input matInput type="password" placeholder="Wachtwoord" [(ngModel)]="newPassword" [disabled]="isLoading" name="newPassword">
+    </mat-form-field>
+    <mat-form-field class="mat-full-width">
+      <input matInput type="password" placeholder="Wachtwoord (herhalen)" [(ngModel)]="newPasswordRepeat" required
+        [disabled]="isLoading" name="newPasswordRepeat">
+    </mat-form-field>
+    <mat-form-field class="mat-full-width">
+      <input matInput [matDatepicker]="picker" placeholder="Geboortedatum" [value]="profile.User.DateOfBirth"
+        (dateInput)="newDate('input', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="mat-full-width">
+      <input matInput type="text" placeholder="Beveiligingsantwoord op '{{selectedQuestionText}}''" [(ngModel)]="profile.User.RecoveryAnswer"
+        [disabled]="isLoading" name="newRecoveryAnswer">
+    </mat-form-field>
+    <mat-form-field class="mat-full-width">
+      <input matInput type="text" placeholder="Gewicht (in kg)" [(ngModel)]="profile.Weigth" required [disabled]="isLoading"
+        name="newWeigth">
+    </mat-form-field>
+    <mat-form-field class="mat-full-width">
+      <input matInput type="text" placeholder="Lengte (in cm)" [(ngModel)]="profile.Length" required [disabled]="isLoading"
+        name="newWeigth">
+    </mat-form-field>
+  </form>
+
+  <div *ngIf="isLoading" style="text-align:center;">
+    <fa name="cog" size="5x" animation="spin"></fa>
+    <h1>Aan het opslaan...</h1>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" [hidden]="isLoading">
+  <button mat-button class="mat-danger" mat-dialog-close [disabled]="isLoading">Annuleren</button>
+  <button mat-button class="mat-success" (click)="onSaveUser()" [disabled]="isLoading">Opslaan</button>
+</mat-dialog-actions>

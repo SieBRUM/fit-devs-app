@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, Renderer } from '@angular/core';
 import { AppService } from './../app.service';
 import { AuthenticationService } from '../authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,14 +8,15 @@ import { Router, ActivatedRoute } from '@angular/router';
     templateUrl: './app-menu-bar.component.html',
     styleUrls: ['./app-menu-bar.component.sass']
 })
-export class AppMenuBarComponent {
+export class AppMenuBarComponent implements AfterViewInit {
     searchUsername = '';
 
     constructor(
         private authenticationService: AuthenticationService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private appService: AppService
+        private appService: AppService,
+        private render: Renderer
     ) {
         this.activatedRoute.queryParams.subscribe(
             (resp) => {
@@ -60,5 +61,11 @@ export class AppMenuBarComponent {
         }
 
         this.router.navigate(['/search'], { queryParams: { query: this.searchUsername } });
+    }
+
+    ngAfterViewInit(): void {
+        const bar = document.querySelector('mat-ink-bar');
+        this.render.setElementStyle(bar, 'backgroundColor', 'white');
+        this.render.setElementStyle(bar, 'opacity', '.6');
     }
 }

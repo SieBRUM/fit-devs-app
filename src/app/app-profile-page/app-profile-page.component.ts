@@ -5,6 +5,8 @@ import { IProfile } from 'src/mapping/IProfile';
 import { SnackBarService } from 'ng7-snack-bar';
 import { IAchievementStatus } from 'src/mapping/IAchievementStatus';
 import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
+import { MatDialog } from '@angular/material';
+import { AppEditProfileDialogComponent } from '../app-edit-profile-dialog/app-edit-profile-dialog.component';
 
 @Component({
     selector: 'app-profile',
@@ -14,30 +16,17 @@ import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
 export class AppProfilePageComponent {
     profile: IProfile = null;
     isLoading = false;
-    isSavingChanges = false;
-    canEdit = false;
-    isInEdit = false;
     isLoadingQuestions = false;
     incompletedAchievements: Array<IAchievementStatus> = [];
     completedAchievements: Array<IAchievementStatus> = [];
     questions: Array<IRecoveryQuestion> = [];
-    selectedQuestion: number = null;
-
-    // Edit data
-    newName: string = null;
-    newUsername: string = null;
-    newPassword: string = null;
-    newEmail: string = null;
-    newLength: number = null;
-    newWeigth: number = null;
-    newRecoveryAnswer = '';
-    newRecoveryQuestion: number = null;
-    newDate: Date = null;
+    profileSideOpened = true;
 
     constructor(
         private authenticationService: AuthenticationService,
         private appService: AppService,
-        private notificationService: SnackBarService
+        private notificationService: SnackBarService,
+        private dialog: MatDialog
     ) {
         this.isLoading = true;
         setTimeout(() => {
@@ -53,8 +42,6 @@ export class AppProfilePageComponent {
                         }
                     });
                     this.profile.User.DateOfBirth = new Date(Date.parse(this.profile.User.DateOfBirth.toString()));
-                    this.canEdit = true;
-                    this.setNewData(this.profile);
                 },
                 (err) => {
                     if (err.status === 401) {
@@ -71,100 +58,53 @@ export class AppProfilePageComponent {
         return this.authenticationService.getCurrentUserCookie().Name;
     }
 
-    toReadableDate(date: string): string {
-        if (!date) {
-            return '';
-        }
-        date = date.substring(0, date.length - 9);
-
-        const newDate = new Date(date);
-        return `${newDate.getUTCDate()}-${newDate.getMonth() + 1}-${newDate.getFullYear()}`;
-    }
-
-    getPercentage(achievement: IAchievementStatus): string {
-        if (!achievement) {
-            return '';
-        }
-
-        return `${Math.round((achievement.CurrentPoints / achievement.Achievement.RequiredPoints) * 100)}`;
-    }
-
     onEnableEdit(): void {
-        if (this.canEdit) {
-            this.setNewData(this.profile);
-            this.isInEdit = true;
-            this.isLoadingQuestions = true;
-            this.appService.getRecoveryQuestions().subscribe(
-                (resp) => {
-                    this.questions = resp.body;
-                    this.isLoadingQuestions = false;
-                },
-                (err) => {
-                    this.isLoadingQuestions = false;
+        this.appService.getRecoveryQuestions().subscribe(
+            (resp) => {
+                this.questions = resp.body;
+                this.isLoadingQuestions = false;
+                const dialogRef = this.dialog.open(AppEditProfileDialogComponent, {
+                    data: {
+                        profile: this.returnNewProfile(this.profile),
+                        questions: this.questions
+                    },
+                    disableClose: true,
+                    width: '80vh'
                 });
-        }
-    }
 
-    onSaveEdit(): void {
-        // do some saving
-        if (!this.canEdit) {
-            return;
-        }
-        this.isSavingChanges = true;
-
-        setTimeout(() => {
-            // Deepclone
-            const newUser: IProfile = JSON.parse(JSON.stringify(this.profile));
-
-            newUser.User.Name = this.newName;
-            newUser.User.Email = this.newEmail;
-            newUser.Length = this.newLength;
-            newUser.Weigth = this.newWeigth;
-            newUser.User.Password = this.newPassword;
-            newUser.User.Username = this.newUsername;
-            newUser.User.RecoveryAnswer = this.newRecoveryAnswer;
-            newUser.User.RecoveryId = this.newRecoveryQuestion;
-            newUser.User.DateOfBirth = this.newDate;
-
-            this.appService.editUser(newUser).subscribe(
-                (resp) => {
-                    this.isSavingChanges = false;
-                    this.isInEdit = false;
-                    this.notificationService.success('Profiel succesvol opgeslagen!', null);
-                    this.profile = resp.body;
-                    this.setNewData(this.profile);
-                    const cookie = this.authenticationService.getCurrentUserCookie();
-                    cookie.Name = this.profile.User.Name;
-                    this.authenticationService.setCurrentUser(cookie, false);
-                },
-                (err) => {
-                    this.isSavingChanges = false;
-
-                    if (err.status === 401) {
-                        this.authenticationService.logout('/profile');
-                    } else {
-                        this.notificationService.error('Error met het opslaan van je profiel!', err.error.Message);
+                dialogRef.afterClosed().subscribe(result => {
+                    if (result) {
+                        this.profile = result;
                     }
-                }
-            );
-
-        }, 1000);
+                });
+            },
+            (err) => {
+                this.isLoadingQuestions = false;
+            });
     }
 
-    onCancel(): void {
-        this.isInEdit = false;
-        this.setNewData(this.profile);
-    }
+    returnNewProfile(profile: IProfile): IProfile {
+        const newProfile: IProfile = {
+            Id: profile.Id,
+            Weigth: profile.Weigth,
+            IsLazy: profile.IsLazy,
+            Length: profile.Length,
+            UserId: profile.UserId,
+            Location: null,
+            LocationId: null,
+            User: {
+                Id: profile.User.Id,
+                DateOfBirth: profile.User.DateOfBirth,
+                Email: profile.User.Email,
+                Name: profile.User.Name,
+                Username: profile.User.Username,
+                RecoveryId: profile.User.RecoveryId,
+                RecoveryAnswer: profile.User.RecoveryAnswer,
+                Password: null,
+                Cookie: null
+            }
+        };
 
-    setNewData(profile: IProfile): void {
-        this.newName = profile.User.Name;
-        this.newEmail = profile.User.Email;
-        this.newLength = profile.Length;
-        this.newWeigth = profile.Weigth;
-        this.newPassword = null;
-        this.newUsername = profile.User.Username;
-        this.newRecoveryAnswer = profile.User.RecoveryAnswer;
-        this.newRecoveryQuestion = profile.User.RecoveryId;
-        this.newDate = profile.User.DateOfBirth;
+        return newProfile;
     }
 }
