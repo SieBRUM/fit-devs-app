@@ -43,20 +43,22 @@
 
     <!-- START Main content-->
     <div style="height:92vh;">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link" (click)="openTab('achievements')">Achievements</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="openTab('vrienden')">Vrienden</a>
-        </li>
-      </ul>
-      <div *ngIf="currentTab=='achievements'">
+      <mat-toolbar-row>
+        <nav mat-tab-nav-bar>
+          <a mat-tab-link class="mat-tab-a" (click)="openTab('achievements')" [active]="currentTab === 'achievements'">
+            Achievements
+          </a>
+          <a mat-tab-link class="mat-tab-a" (click)="openTab('vrienden')" [active]="currentTab === 'vrienden'">
+            Vrienden
+          </a>
+        </nav>
+      </mat-toolbar-row>
+      <div *ngIf="currentTab=='achievements'" style="padding-left: 3px;">
         <app-achievement [profile]="profile" [incompletedAchievements]="incompletedAchievements"
           [completedAchievements]="completedAchievements"></app-achievement>
       </div>
 
-      <div *ngIf="currentTab=='vrienden'">
+      <div *ngIf="currentTab=='vrienden'" style="padding-left: 3px;">
         <app-friends [friends]="profile.Friends"></app-friends>
       </div>
     </div>

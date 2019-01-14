@@ -1,3 +1,8 @@
+<div *ngIf="_friends.length === 0" style="text-align:center;">
+  <mat-icon>sentiment_very_dissatisfied</mat-icon>
+  <h3>Je hebt nog geen vrienden</h3>
+</div>
+
 <mat-accordion class="example-headers-align">
   <mat-expansion-panel *ngFor="let friend of _friends" hideToggle>
     <mat-expansion-panel-header>
@@ -12,25 +17,26 @@
 
     <table style="width:40%">
       <tr>
-        <th><strong>Naam</strong></th>
+        <th>Naam:</th>
         <td>{{friend.Name}}</td>
       </tr>
       <tr>
-        <td><strong>Geboortedatum</strong></td>
+        <th>Geboortedatum:</th>
         <td>{{toReadableDate(friend.DateOfBirth)}}</td>
       </tr>
       <tr>
-        <td><strong>Lui?</strong></td>
-        <td>{{friend.IsLazy}}</td>
+        <th>Lui:</th>
+        <td>{{friend.IsLazy ? 'Ja' : 'Nee'}}</td>
       </tr>
     </table>
-
-    <p></p>
     <mat-divider></mat-divider>
-    <p></p>
-
-    <div *ngFor="let achievement of friend.CompletedAchievements">
-      <p> {{achievement.Achievement.Name}} </p>
+    <br>
+    <h2>Achievements</h2>
+    <div *ngIf="shouldShowDevider(friend) == false">No Achievements available for this user</div>
+    <div class="BadgeLayout" *ngFor="let achievement of friend.CompletedAchievements">
+      <img style="width:75px;height:75px;" matTooltip="{{achievement.Achievement.Description}}" src="../../assets/images/{{getPlaatje(achievement)}}.png"
+        class="achievement-badge-avatar">
+      <p>{{achievement.Achievement.Name}} </p>
     </div>
 
     <mat-action-row>
