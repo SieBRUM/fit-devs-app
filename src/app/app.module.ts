@@ -13,7 +13,7 @@ import {
   MatFormFieldModule, MatSnackBarModule, MatIconModule,
   MatSidenavModule, MatChipsModule, MatCardModule,
   MatInputModule, MatGridListModule, MatProgressSpinnerModule,
-  MatSelectModule, MatTabsModule, MatToolbarModule, MatListModule, MatNativeDateModule, MatDatepickerModule, MatExpansionModule, MatProgressBarModule, MatTooltipModule
+  MatSelectModule, MatTabsModule, MatToolbarModule, MatListModule, MatNativeDateModule, MatDatepickerModule, MatExpansionModule, MatProgressBarModule, MatTooltipModule, MatSlideToggleModule, MatRadioModule
 } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -84,6 +84,8 @@ import { AchievementService } from './achievement.service';
     MatTabsModule,
     MatToolbarModule,
     MatStepperModule,
+    MatSlideToggleModule,
+    MatRadioModule,
     MatListModule,
     AlertModule.forRoot(),
     SnackBarModule.forRoot({
