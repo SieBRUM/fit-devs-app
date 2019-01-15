@@ -1,12 +1,12 @@
 <mat-slide-toggle [(ngModel)]="shouldShowProgress" color="primary">
-  {{shouldShowProgress ? 'Behaalde achievements' : 'Te behalen achievements'}}
+  {{!shouldShowProgress ? 'Behaalde achievements' : 'Te behalen achievements'}}
 </mat-slide-toggle>
 
 <div *ngIf="!shouldShowProgress" class="main-div">
-  <h2 style="text-align: center;">Behaalde achievements!
+  <h2 style="text-align: center; width: 100%;">Behaalde achievements!
   </h2>
   <br>
-  <div *ngFor="let a of completedAchievements">
+  <div *ngFor="let a of completedAchievements" style="padding-right: 10px">
     <mat-card class="achievement-card center" *ngIf="!shouldShowAchievement(a)">
       <mat-card-header>
         <img matTooltip="{{a.Achievement.Description}}" mat-card-avatar src="{{achievementService.getImage(a)}}" class="achievement-badge-avatar">
@@ -17,10 +17,10 @@
   </div>
 </div>
 
-<div *ngIf="shouldShowProgress">
-  <h2 style="text-align: center;">Deze achievement heb je bijna behaald!</h2>
+<div *ngIf="shouldShowProgress" class="main-div">
+  <h2 style="text-align: center; width: 100%;">Deze achievement heb je bijna behaald!</h2>
   <br>
-  <div *ngFor="let a of incompletedAchievements">
+  <div *ngFor="let a of incompletedAchievements" style="padding-right: 10px">
     <mat-card class="achievement-card center">
       <mat-card-header>
         <img matTooltip="{{a.Achievement.Description}}" mat-card-avatar src="{{achievementService.getImage(a)}}" class="achievement-badge-avatar">

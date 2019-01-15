@@ -13,6 +13,10 @@
           <mat-icon mat-list-icon>person</mat-icon>
         </mat-list-item>
         <mat-list-item>
+          <mat-icon mat-list-icon>wc</mat-icon>
+          <h4 mat-line> {{profile.User.Gender == 0 ? 'Man' : 'Vrouw'}}</h4>
+        </mat-list-item>
+        <mat-list-item>
           <mat-icon mat-list-icon>cake</mat-icon>
           <h4 mat-line> {{profile.User.DateOfBirth | date:'dd-MM-yyyy'}}</h4>
         </mat-list-item>
