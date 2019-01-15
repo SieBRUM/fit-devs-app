@@ -31,7 +31,7 @@ export class AppEditProfileDialogComponent {
         this.selectedQuestionText = this.questions.filter(x => x.Id === this.profile.User.RecoveryId)[0].RecoveryQuestion;
     }
 
-    newDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    newDate(event: MatDatepickerInputEvent<Date>) {
         this.profile.User.DateOfBirth = event.value;
     }
 
@@ -78,7 +78,6 @@ export class AppEditProfileDialogComponent {
         if (this.profile.User.RecoveryAnswer === "") {
             this.profile.User.RecoveryAnswer = null;
         }
-
         setTimeout(() => {
             this.appService.editUser(this.profile).subscribe(
                 (resp) => {

@@ -10,7 +10,7 @@
         {{friend.Name}}
       </mat-panel-title>
       <mat-panel-description>
-        Show Profile And Achievements
+        Bekijk profiel en achievements
         <mat-icon>account_circle</mat-icon>
       </mat-panel-description>
     </mat-expansion-panel-header>
@@ -22,7 +22,7 @@
       </tr>
       <tr>
         <th>Geboortedatum:</th>
-        <td>{{toReadableDate(friend.DateOfBirth)}}</td>
+        <td>{{friend.DateOfBirth | date:'dd-MM-yyyy'}}</td>
       </tr>
       <tr>
         <th>Lui:</th>
@@ -32,9 +32,9 @@
     <mat-divider></mat-divider>
     <br>
     <h2>Achievements</h2>
-    <div *ngIf="shouldShowDevider(friend) == false">No Achievements available for this user</div>
+    <div *ngIf="shouldShowDevider(friend) == false">Deze gebruiker heeft nog geen achievements gehaald!</div>
     <div class="BadgeLayout" *ngFor="let achievement of friend.CompletedAchievements">
-      <img style="width:75px;height:75px;" matTooltip="{{achievement.Achievement.Description}}" src="../../assets/images/{{getPlaatje(achievement)}}.png"
+      <img style="width:75px;height:75px;" matTooltip="{{achievement.Achievement.Description}}" src="{{achievementService.getImage(achievement)}}"
         class="achievement-badge-avatar">
       <p>{{achievement.Achievement.Name}} </p>
     </div>

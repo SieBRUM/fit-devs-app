@@ -38,6 +38,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AppEditProfileDialogComponent } from './app-edit-profile-dialog/app-edit-profile-dialog.component';
 import { AppFriendsPageComponent } from './app-friends-page/app-friends-page.component';
 import { AppAchievementPageComponent } from './app-achievement-page/app-achievement-page.component';
+import { AchievementService } from './achievement.service';
 
 
 
@@ -101,6 +102,7 @@ import { AppAchievementPageComponent } from './app-achievement-page/app-achievem
   providers: [
     AppService,
     AuthenticationService,
+    AchievementService,
     WebsocketService,
     {
       provide: HTTP_INTERCEPTORS,
