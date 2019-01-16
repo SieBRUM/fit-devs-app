@@ -33,10 +33,12 @@
     <br>
     <h2>Achievements</h2>
     <div *ngIf="shouldShowDevider(friend) == false">Deze gebruiker heeft nog geen achievements gehaald!</div>
-    <div class="BadgeLayout" *ngFor="let achievement of friend.CompletedAchievements">
-      <img style="width:75px;height:75px;" matTooltip="{{achievement.Achievement.Description}}" src="{{achievementService.getImage(achievement)}}"
-        class="achievement-badge-avatar">
-      <p>{{achievement.Achievement.Name}} </p>
+    <div *ngFor="let achievement of friend.CompletedAchievements">
+      <div class="BadgeLayout" *ngIf="!shouldShowAchievement(achievement, friend)">
+        <img style="width:75px;height:75px;" matTooltip="{{achievement.Achievement.Description}}" src="{{achievementService.getImage(achievement)}}"
+          class="achievement-badge-avatar">
+        <p *ngIf="!shouldShowAchievement(achievement, friend)">{{achievement.Achievement.Name}} </p>
+      </div>
     </div>
 
     <mat-action-row>

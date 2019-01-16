@@ -7,6 +7,7 @@ import { IRecoveryQuestion } from 'src/mapping/IRecoveryQuestion';
 import { ICookieUser } from 'src/mapping/ICookieUser';
 import { IUserFlat } from 'src/mapping/IUserFlat';
 import { MatSnackBar } from '@angular/material';
+import { IActivity } from 'src/mapping/IActivity';
 
 @Injectable()
 export class AppService {
@@ -87,9 +88,13 @@ export class AppService {
         return this.http.post<any>(`${this.API_URL}removefriend`, friendId, { observe: 'response' });
     }
 
-
+    getCloseUsers(): Observable<HttpResponse<Array<IProfile>>> {
+        return this.http.get<Array<IProfile>>(`${this.API_URL}personradius`, { observe: 'response' });
+    }
+    getCloseActivities(): Observable<HttpResponse<Array<IActivity>>> {
+        return this.http.get<Array<IActivity>>(`${this.API_URL}exerciseradius`, { observe: 'response' });
+    }
     getPosition(): Coordinates {
         return this.location;
     }
-
 }

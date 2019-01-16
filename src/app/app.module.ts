@@ -39,6 +39,7 @@ import { AppEditProfileDialogComponent } from './app-edit-profile-dialog/app-edi
 import { AppFriendsPageComponent } from './app-friends-page/app-friends-page.component';
 import { AppAchievementPageComponent } from './app-achievement-page/app-achievement-page.component';
 import { AchievementService } from './achievement.service';
+import { AppInviteWorkoutDialogComponent } from './app-invite-workout-dialog/app-invite-workout-dialog.component';
 
 
 
@@ -54,7 +55,8 @@ import { AchievementService } from './achievement.service';
     AppSearchPageComponent,
     AppEditProfileDialogComponent,
     AppFriendsPageComponent,
-    AppAchievementPageComponent
+    AppAchievementPageComponent,
+    AppInviteWorkoutDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -113,6 +115,6 @@ import { AchievementService } from './achievement.service';
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [AppEditProfileDialogComponent]
+  entryComponents: [AppEditProfileDialogComponent, AppInviteWorkoutDialogComponent]
 })
 export class AppModule { }

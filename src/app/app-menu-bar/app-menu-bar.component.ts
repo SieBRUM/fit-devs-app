@@ -2,6 +2,8 @@ import { Component, AfterViewInit, Renderer } from '@angular/core';
 import { AppService } from './../app.service';
 import { AuthenticationService } from '../authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { AppInviteWorkoutDialogComponent } from '../app-invite-workout-dialog/app-invite-workout-dialog.component';
 
 @Component({
     selector: 'app-menu-bar',
@@ -16,7 +18,8 @@ export class AppMenuBarComponent implements AfterViewInit {
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private appService: AppService,
-        private render: Renderer
+        private render: Renderer,
+        private dialog: MatDialog
     ) {
         this.activatedRoute.queryParams.subscribe(
             (resp) => {
@@ -24,6 +27,19 @@ export class AppMenuBarComponent implements AfterViewInit {
             }
         );
 
+    }
+    onClickShow(): void {
+        const dialogRef = this.dialog.open(AppInviteWorkoutDialogComponent, {
+            disableClose: true,
+            minWidth: '100vh',
+            minHeight: '40vh'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+
+            }
+        });
     }
 
     login(): void {

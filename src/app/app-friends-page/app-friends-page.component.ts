@@ -91,10 +91,10 @@ export class AppFriendsPageComponent {
         return true;
     }
 
-    shouldShowAchievement(achievement: IAchievementStatus): boolean {
+    shouldShowAchievement(achievement: IAchievementStatus, friend: IUserFlat): boolean {
         if (achievement.CurrentPoints >= achievement.Achievement.RequiredPoints) {
             if (
-                this.completedAchievements.find(x => x.Achievement.Tier < achievement.Achievement.Tier
+                friend.CompletedAchievements.find(x => x.Achievement.Tier < achievement.Achievement.Tier
                     && x.Achievement.Name === achievement.Achievement.Name)
             ) {
                 return true;
