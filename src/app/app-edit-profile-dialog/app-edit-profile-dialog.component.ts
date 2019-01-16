@@ -36,7 +36,6 @@ export class AppEditProfileDialogComponent {
     }
 
     onSaveUser(): void {
-        this.isLoading = true;
         if (this.newPassword !== this.newPasswordRepeat) {
             this.notificationService.open(`Wachtwoorden komen niet overeen!`, null, {
                 panelClass: 'error-snack',
@@ -45,39 +44,46 @@ export class AppEditProfileDialogComponent {
             return;
         }
         if (!this.profile.User.Name) {
-            this.notificationService.open(`Naam komen niet overeen!`, null, {
+            this.notificationService.open(`Naam moet ingevuld zijn!`, null, {
                 panelClass: 'error-snack',
                 duration: 2500
-            }); return;
+            });
+            return;
         }
         if (!this.profile.User.Username) {
-            this.notificationService.open(`Gebruikersnaam komen niet overeen!`, null, {
+            this.notificationService.open(`Gebruikersnaam moet ingevuld zijn!`, null, {
                 panelClass: 'error-snack',
                 duration: 2500
-            }); return;
+            });
+            return;
         }
         if (!this.profile.User.DateOfBirth) {
-            this.notificationService.open(`Geboortedatum komen niet overeen!`, null, {
+            this.notificationService.open(`Geboortedatum moet ingevuld zijn!`, null, {
                 panelClass: 'error-snack',
                 duration: 2500
-            }); return;
+            });
+            return;
         }
         if (!this.profile.Weigth) {
-            this.notificationService.open(`Gewicht komen niet overeen!`, null, {
+            this.notificationService.open(`Gewicht moet ingevuld zijn!`, null, {
                 panelClass: 'error-snack',
                 duration: 2500
-            }); return;
+            });
+            return;
         }
         if (!this.profile.Length) {
-            this.notificationService.open(`Lengte komen niet overeen!`, null, {
+            this.notificationService.open(`Lengte moet ingevuld zijn!`, null, {
                 panelClass: 'error-snack',
                 duration: 2500
-            }); return;
+            });
+            return;
         }
 
         if (this.profile.User.RecoveryAnswer === "") {
             this.profile.User.RecoveryAnswer = null;
         }
+
+        this.isLoading = true;
         setTimeout(() => {
             this.appService.editUser(this.profile).subscribe(
                 (resp) => {
