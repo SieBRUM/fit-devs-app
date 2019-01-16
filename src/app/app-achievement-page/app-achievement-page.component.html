@@ -5,7 +5,8 @@
 </div>
 
 <div *ngIf="!shouldShowProgress" class="main-div">
-  <h2 style="text-align: center; width: 100%;">Behaalde achievements!
+  <h2 style="text-align: center; width: 100%;">
+    Behaalde achievements!
   </h2>
   <br>
   <div *ngFor="let a of completedAchievements" style="padding-right: 10px">
@@ -19,14 +20,14 @@
   </div>
 </div>
 
-<div *ngIf="shouldShowProgress" class="main-div">
-  <div *ngIf="!hasnoProgressAchievements()" style="text-align: center;">
+<div *ngIf="shouldShowProgress">
+  <div *ngIf="!hasnoProgressAchievements()" style="text-align: center;" class="main-div">
     <h1>Geen achievements behaalbaar!</h1>
-    <p>Probeer eerst te sporten voordat je achievements kan verkrijgen.</p>
+    <p style="width: 100%;">Probeer eerst te sporten voordat je achievements kan verkrijgen.</p>
     <br>
     <br>
   </div>
-  <div *ngIf="hasnoProgressAchievements() == true">
+  <div *ngIf="hasnoProgressAchievements() == true" class="main-div">
     <h2 style="text-align: center; width: 100%;">Deze achievement heb je bijna behaald!</h2> <br>
     <div *ngFor="let a of incompletedAchievements" style="padding-right: 10px">
       <mat-card class="achievement-card center">
@@ -45,3 +46,4 @@
       </mat-card>
     </div>
   </div>
+</div>
