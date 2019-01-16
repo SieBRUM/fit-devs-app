@@ -8,4 +8,5 @@ export class IUser {
     RecoveryId: number;
     RecoveryAnswer: string;
     Cookie: string;
+    Gender?: number;
 }

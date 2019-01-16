@@ -102,6 +102,18 @@
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
+          <mat-form-field class="mat-full-width">
+            <mat-select placeholder="Geslacht" [(ngModel)]="gender" required autofocus [disabled]="!isLoadingQuestions(isLoading, questions) && isLoading"
+              name="loginGender">
+              <mat-option value="null" disabled hidden>Kies geslacht</mat-option>
+              <mat-option value="0">
+                Man
+              </mat-option>
+              <mat-option value="1">
+                Vrouw
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <button mat-button class="mat-danger" (click)="onCancel()" [hidden]="!isLoadingQuestions(isLoading, questions) && isLoading">
             Annuleren
             <fa name="times"></fa>

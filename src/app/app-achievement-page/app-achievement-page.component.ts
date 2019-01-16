@@ -54,4 +54,21 @@ export class AppAchievementPageComponent {
             }
         }
     }
+
+    hasnoAchievements(): boolean {
+        if (Object.keys(this.completedAchievements).length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    hasnoProgressAchievements(): boolean {
+        if (Object.keys(this.incompletedAchievements).length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

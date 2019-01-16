@@ -25,6 +25,7 @@ export class AppRegisterPageComponent {
     username: string;
     password: string;
     passwordRepeat: string;
+    gender: number;
     name: string;
     email: string;
     date: Date;
@@ -129,7 +130,8 @@ export class AppRegisterPageComponent {
                 RecoveryAnswer: this.recoveryQuestionAnswer,
                 RecoveryId: this.selectedQuestion,
                 Username: this.username,
-                Cookie: null
+                Cookie: null,
+                Gender: this.gender
             },
             UserId: 0,
             Weigth: this.weigth

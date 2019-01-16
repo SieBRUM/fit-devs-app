@@ -29,10 +29,9 @@
         <td>{{friend.IsLazy ? 'Ja' : 'Nee'}}</td>
       </tr>
     </table>
-    <mat-divider></mat-divider>
+    <mat-divider *ngIf="shouldShowDevider(friend)"></mat-divider>
     <br>
-    <h2>Achievements</h2>
-    <div *ngIf="shouldShowDevider(friend) == false">Deze gebruiker heeft nog geen achievements gehaald!</div>
+    <h2 *ngIf="shouldShowDevider(friend)">Achievements</h2>
     <div *ngFor="let achievement of friend.CompletedAchievements">
       <div class="BadgeLayout" *ngIf="!shouldShowAchievement(achievement, friend)">
         <img style="width:75px;height:75px;" matTooltip="{{achievement.Achievement.Description}}" src="{{achievementService.getImage(achievement)}}"
