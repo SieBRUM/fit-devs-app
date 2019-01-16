@@ -33,6 +33,9 @@ export class AppFriendsPageComponent {
 
     @Input()
     set friends(friends: Array<IUserFlat>) {
+        if (friends == null) {
+            friends = [];
+        }
         this._friends = friends;
         const list = [];
         friends.forEach(element => {
