@@ -17,37 +17,37 @@ export class AchievementService {
     getImage(achievement: IAchievementStatus): string {
         let image = '/assets/images/';
         // Categorie
-        if (achievement.Achievement.Name.indexOf('Atletiek') > -1) {
+        if (achievement.Achievement.Activity.ActivityName.indexOf('Atletiek') > -1) {
             image += 'Atletiek/BadgeAtletiek';
-        } else if (achievement.Achievement.Name.indexOf('Badminton') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Badminton') > -1) {
             image += 'Badminton/Badminton';
-        } else if (achievement.Achievement.Name.indexOf('Basketball') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Basketball') > -1) {
             image += 'Basketball/BadgeBasketball';
-        } else if (achievement.Achievement.Name.indexOf('Fitness') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Fitness') > -1) {
             image += 'Fitness/BadgeFitness';
-        } else if (achievement.Achievement.Name.indexOf('Football') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Football') > -1) {
             image += 'Football/BadgeFootball';
-        } else if (achievement.Achievement.Name.indexOf('Handbal') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Handbal') > -1) {
             image += 'Handbal/BadgeHandbal';
-        } else if (achievement.Achievement.Name.indexOf('Hardlopen') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Hardlopen') > -1) {
             image += 'Hardlopen/Hardlopen';
-        } else if (achievement.Achievement.Name.indexOf('Hockey') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Hockey') > -1) {
             image += 'Hockey/BadgeHockey';
-        } else if (achievement.Achievement.Name.indexOf('Honkbal') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Honkbal') > -1) {
             image += 'Honkbal/Honkball';
-        } else if (achievement.Achievement.Name.indexOf('PingPong') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('PingPong') > -1) {
             image += 'PingPong/BadgePingPong';
-        } else if (achievement.Achievement.Name.indexOf('Soccer') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Soccer') > -1) {
             image += 'Soccer/BadgeSoccer';
-        } else if (achievement.Achievement.Name.indexOf('Tennis') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Tennis') > -1) {
             image += 'Tennis/BadgeTennis';
-        } else if (achievement.Achievement.Name.indexOf('Vechtsport') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Vechtsport') > -1) {
             image += 'Vechtsport/Vechtsport';
-        } else if (achievement.Achievement.Name.indexOf('Wielrennen') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Wielrennen') > -1) {
             image += 'Wielrennen/Wielrennen';
-        } else if (achievement.Achievement.Name.indexOf('Yoga') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Yoga') > -1) {
             image += 'Yoga/Yoga';
-        } else if (achievement.Achievement.Name.indexOf('Zwemmen') > -1) {
+        } else if (achievement.Achievement.Activity.ActivityName.indexOf('Zwemmen') > -1) {
             image += 'Zwemmen/BadgeZwemmen';
         }
         // Tier

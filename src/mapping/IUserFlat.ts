@@ -2,12 +2,12 @@ import { IAchievementStatus } from './IAchievementStatus';
 
 export class IUserFlat {
     Id: number;
-    Name: string;
     Username: string;
-    CompletedAchievements: IAchievementStatus[];
-    Gender: number;
+    Name: string;
     DateOfBirth: Date;
     IsLazy: boolean;
+    CompletedAchievements: IAchievementStatus[];
+    Gender: number;
     HasRequestOpen: FriendRequestStatus;
 }
 
