@@ -95,7 +95,7 @@ export class AppFriendsPageComponent {
         if (achievement.CurrentPoints >= achievement.Achievement.RequiredPoints) {
             if (
                 friend.CompletedAchievements.find(x => x.Achievement.Tier < achievement.Achievement.Tier
-                    && x.Achievement.Name === achievement.Achievement.Name)
+                    && x.Achievement.Activity.ActivityName === achievement.Achievement.Activity.ActivityName)
             ) {
                 return true;
             }

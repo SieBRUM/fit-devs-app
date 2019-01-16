@@ -4,20 +4,25 @@
       <a mat-tab-link class="mat-tab-a" routerLink="/home" [active]="isActive('/home')">
         Home
       </a>
-      <a mat-tab-link class="mat-tab-a" routerLink="/profile" [active]="isActive('/profile')">
-        Mijn profiel
-      </a>
-      <a mat-tab-link class="mat-tab-a" routerLink="/exercises" [active]="isActive('/exercises')">
-        Oefeningen
-      </a>
+      <div *ngIf="authenticationService.isLoggedIn()">
+        <a mat-tab-link class="mat-tab-a" routerLink="/profile" [active]="isActive('/profile')">
+          Mijn profiel
+        </a>
+      </div>
+      <div *ngIf="authenticationService.isLoggedIn()">
+        <a mat-tab-link class="mat-tab-a" routerLink="/exercises" [active]="isActive('/exercises')">
+          Oefeningen
+        </a>
+      </div>
     </nav>
     <!-- Make sure to fill page, to align things on right side -->
     <span class="fill-space"></span>
 
     <div *ngIf="authenticationService.isLoggedIn()">
-      <button mat-raised-button class="notification-button" style="right: 50px;" (click)="onClickShow()">Stuur Uitnodigingen!</button> 
-     </div>
-     
+      <button mat-raised-button class="notification-button" style="right: 50px;" (click)="onClickShow()">Stuur
+        Uitnodigingen!</button>
+    </div>
+
     <mat-form-field *ngIf="authenticationService.isLoggedIn()" class="search-input" appearance="outline">
       <mat-label>Zoeken</mat-label>
       <input matInput type="text" [(ngModel)]="searchUsername" (keydown.enter)="onSearchUsername()" name="searchBarInput">
